@@ -1,0 +1,243 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.farmafene.cas</groupId>
+	<artifactId>cas-project</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>Module: ${project.name}</description>
+	<name>${project.groupId}:${project.artifactId}:${project.version}:${project.packaging}</name>
+	<modules>
+		<module>cas-server</module>
+	</modules>
+	<properties>
+		<!-- -->
+		<!-- -->
+		<!-- Put this properties in your user Settings -->
+		<!-- -->
+		<!-- <profile> -->
+		<!-- <activation> -->
+		<!-- <activeByDefault>false</activeByDefault> -->
+		<!-- </activation> -->
+		<!-- <id>@Your profile@</id> -->
+		<!-- <properties> -->
+		<!-- <FARMAFENE.GITHUB.SERVER.ID />: @Id of Server in .m2/setting.xml@ -->
+		<!-- <FARMAFENE.repository.SNAPSHOT.ID />:@Id of Server Snapshots in .m2/setting.xml@ -->
+		<!-- <FARMAFENE.repository.SNAPSHOT />: @Url of your Snapshot Repositoy@ -->
+		<!-- <FARMAFENE.repository.RELEASES.ID />: @Id of Server releases in .m2/setting.xml@ -->
+		<!-- <FARMAFENE.repository.RELEASES />: @Url of your Releases Repositoy@ -->
+		<!-- <FARMAFENE.distributionManagement.RELEASES.ID />: @Id of Server releases@ -->
+		<!-- <FARMAFENE.distributionManagement.RELEASES />: @Url of your Releases@ -->
+		<!-- <FARMAFENE.distributionManagement.SNAPSHOT.ID />: @Id of Server Snapshots@ -->
+		<!-- <FARMAFENE.distributionManagement.SNAPSHOT />: @Url of your Snapshots@ -->
+		<!-- </properties> -->
+		<!-- </profile> -->
+		<project.scm.id>${FARMAFENE.GITHUB.SERVER.ID}</project.scm.id>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven-release-plugin>2.5.2</maven-release-plugin>
+		<maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
+		<maven-compliler-plugin>2.3.2</maven-compliler-plugin>
+		<maven-dependency-plugin>2.10</maven-dependency-plugin>
+		<maven-source-plugin>2.4</maven-source-plugin>
+		<maven.assembly.plugin.version>2.6</maven.assembly.plugin.version>
+		<wagon-webdav-jackrabbit>2.9</wagon-webdav-jackrabbit>
+		<jdk.version>1.7</jdk.version>
+		<maven-scm-plugin>1.9.4</maven-scm-plugin>
+		<!-- CAS DEPENDENCIES -->
+		<cas.VERSION>4.2.2</cas.VERSION>
+		<disruptor.VERSION>3.3.4</disruptor.VERSION>
+		<pac4j.VERSION>1.8.8</pac4j.VERSION>
+		<spring.VERSION>4.2.3.RELEASE</spring.VERSION>
+		<spring-webmvc-pac4j.VERSION>1.0.1</spring-webmvc-pac4j.VERSION>
+		<jstl.VERSION>1.2</jstl.VERSION>
+		<cas-server-security-filter.VERSION>2.0.4</cas-server-security-filter.VERSION>
+		<drop-wizard-metrics.VERSION>3.1.2</drop-wizard-metrics.VERSION>
+		<log4j.VERSION>2.5</log4j.VERSION>
+		<spring-webflow-client.VERSION>1.0.0</spring-webflow-client.VERSION>
+		<c3p0.VERSION>0.9.5.1</c3p0.VERSION>
+		<bouncycastle.VERSION>1.51</bouncycastle.VERSION>
+		<servlet-api.VERSION>3.0.1</servlet-api.VERSION>
+		<jsp-api.VERSION>2.3.1</jsp-api.VERSION>
+	</properties>
+	<scm>
+		<tag>HEAD</tag>
+		<url>https://github.com/venanciolm/cas-server</url>
+		<connection>scm:git:${project.scm.url}.git</connection>
+		<developerConnection>scm:git:${project.scm.url}.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>${project.scm.url}/issues</url>
+	</issueManagement>
+	<distributionManagement>
+		<repository>
+			<id>${FARMAFENE.distributionManagement.RELEASES.ID}</id>
+			<url>${FARMAFENE.distributionManagement.RELEASES}</url>
+		</repository>
+		<snapshotRepository>
+			<id>${FARMAFENE.distributionManagement.SNAPSHOT.ID}</id>
+			<url>${FARMAFENE.distributionManagement.SNAPSHOT}</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>${FARMAFENE.repository.RELEASES.ID}</id>
+			<url>${FARMAFENE.repository.RELEASES}</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>${FARMAFENE.repository.SNAPSHOT.ID}</id>
+			<url>${FARMAFENE.repository.SNAPSHOT}</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>${wagon-webdav-jackrabbit}</version>
+			</extension>
+		</extensions>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compliler-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-scm-plugin</artifactId>
+					<version>${maven-scm-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven-dependency-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.plugin.version}</version>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-antrun-plugin
+										</artifactId>
+										<versionRange>
+											[1.3,)
+										</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<show>private</show>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pack-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${basedir}/target</outputDirectory>
+					<finalName>${project.artifactId}-${project.version}</finalName>
+					<attach>true</attach>
+					<forceCreation>false</forceCreation>
+					<includePom>true</includePom>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+					<detail>true</detail>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
