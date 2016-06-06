@@ -23,8 +23,6 @@
  */
 package com.farmafene.cas.integration;
 
-import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -34,17 +32,15 @@ import org.slf4j.LoggerFactory;
 
 import com.farmafene.cas.integration.basic.BasicRestClient;
 
-public class BasicTestJunit {
+public class LoginTestJunit {
 
 	private static final Logger LOG = LoggerFactory
-			.getLogger(BasicTestJunit.class);
+			.getLogger(LoginTestJunit.class);
 	private static final String USER = "A";
 	private static final String PWD = "A";
 	private static String TGT;
 	private static String CAS_SERVER = "[cas server url]";
-	private static String CAS_PROXY_CALLBACK = CAS_SERVER + "/casProxy";
 	private static BasicRestClient UTIL;
-	private static String PGT;
 
 	@BeforeClass
 	public static void genenetateTickets() {
@@ -67,66 +63,9 @@ public class BasicTestJunit {
 		Assert.assertNotNull("No se ha generado el service '{}'", ticket);
 		Assert.assertNotNull("No se ha generado el service ", ticket);
 		LOG.info("El ticket es: {}", ticket);
-		String user = UTIL.validate(CAS_SERVER, ticket);
+		String user = UTIL.serviceValidate(CAS_SERVER, ticket);
 		Assert.assertNotNull("No se ha devuelto el usuario '{}'", user);
 		Assert.assertEquals("El usuarion no corresponde con el loggeado", USER,
-				user);
-		LOG.info("El usuario es: {}", user);
-	}
-
-	@Test
-	public void _02test() {
-		String ticket = UTIL.getServiceTicket(TGT, CAS_SERVER);
-		Assert.assertNotNull("No se ha generado el service '{}'", ticket);
-		LOG.info("El ticket es: {}", ticket);
-		String user = UTIL.serviceValidate(CAS_SERVER, ticket);
-		Assert.assertNotNull("No se ha devuelto el usuario ", user);
-		Assert.assertEquals("El usuario no corresponde con el loggeado", USER,
-				user);
-		LOG.info("El usuario es: {}", user);
-	}
-
-	@Test
-	public void _03test() {
-		String ticket = UTIL.getServiceTicket(TGT, CAS_SERVER);
-		Assert.assertNotNull("No se ha generado el service '{}'", ticket);
-		LOG.info("El ticket es: {}", ticket);
-		Map<String, String> map = UTIL.serviceValidate(CAS_SERVER, ticket,
-				CAS_PROXY_CALLBACK);
-		Assert.assertNotNull("No se ha devuelto el mapa '{}'", map);
-		LOG.info("El mapa es: {}", map);
-		Assert.assertNotNull("No se ha devuelto el usuario '{}'",
-				map.get(BasicRestClient.USER));
-		Assert.assertEquals("El usuarion no corresponde con el loggeado", USER,
-				map.get(BasicRestClient.USER));
-		LOG.info("El usuario es: {}", map.get(BasicRestClient.USER));
-		Assert.assertNotNull("No se ha devuelto el PGT ",
-				map.get(BasicRestClient.PGT));
-		LOG.info("El PGT: {}", map.get(BasicRestClient.PGT));
-		PGT = map.get(BasicRestClient.PGT);
-	}
-
-	@Test
-	public void _04test() {
-		String ticket = UTIL.getProxyServiceTicket(PGT, CAS_SERVER);
-		Assert.assertNotNull("No se ha generado el service '{}'", ticket);
-		LOG.info("El ticket es: {}", ticket);
-		String user = UTIL.proxyValidate(CAS_SERVER, ticket);
-		Assert.assertNotNull("No se ha devuelto el usuario ", user);
-		Assert.assertEquals("El usuario no corresponde con el loggeado", USER,
-				user);
-		LOG.info("El usuario es: {}", user);
-	}
-
-	@Test
-	public void _05test() {
-		String newService = "https://localhost";
-		String ticket = UTIL.getProxyServiceTicket(PGT, newService);
-		Assert.assertNotNull("No se ha generado el service '{}'", ticket);
-		LOG.info("El ticket es: {}", ticket);
-		String user = UTIL.proxyValidate(newService, ticket);
-		Assert.assertNotNull("No se ha devuelto el usuario ", user);
-		Assert.assertEquals("El usuario no corresponde con el loggeado", USER,
 				user);
 		LOG.info("El usuario es: {}", user);
 	}
