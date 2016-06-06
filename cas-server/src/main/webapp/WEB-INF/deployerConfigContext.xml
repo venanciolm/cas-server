@@ -14,36 +14,15 @@
 
 	<util:map id="authenticationHandlersResolvers">
 		<entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
-		<!--  utilizado para  proxies -->
-		<entry key-ref="primaryProxyAuthenticationHandler" value-ref="proxyPrincipalResolver" /> 
+		<!-- utilizado para proxies -->
+		<entry key-ref="primaryProxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
 	</util:map>
 
 	<util:list id="authenticationMetadataPopulators">
 		<ref bean="successfulHandlerMetaDataPopulator" />
 		<ref bean="rememberMeAuthenticationMetaDataPopulator" />
 	</util:list>
-
-	<bean id="attributeRepository"
-		class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
-		p:backingMap-ref="attrRepoBackingMap" />
-
 	<alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver" />
-
-	<util:map id="attrRepoBackingMap">
-		<entry key="uid" value="uid" />
-		<entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
-		<entry key="groupMembership" value="groupMembership" />
-		<entry>
-			<key>
-				<value>memberOf</value>
-			</key>
-			<list>
-				<value>faculty</value>
-				<value>staff</value>
-				<value>org</value>
-			</list>
-		</entry>
-	</util:map>
 
 	<alias name="serviceThemeResolver" alias="themeResolver" />
 
