@@ -39,7 +39,7 @@ public class LoginTestJunit {
 	private static final String USER = "A";
 	private static final String PWD = "A";
 	private static String TGT;
-	private static String CAS_SERVER = "[cas server url]";
+	private static String CAS_SERVER = "[CAS SERVER]";
 	private static BasicRestClient UTIL;
 
 	@BeforeClass

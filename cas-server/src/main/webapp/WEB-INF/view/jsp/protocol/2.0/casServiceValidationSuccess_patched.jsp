@@ -7,7 +7,7 @@
 		<cas:user>${fn:escapeXml(principal.id)}</cas:user><c:if test="${not empty pgtIou}">
 			<cas:proxyGrantingTicket>${pgtIou}</cas:proxyGrantingTicket></c:if><c:if test="${fn:length(chainedAuthentications) > 0}">
 		<cas:proxies>
-				<c:forEach var="proxy" items="${chainedAuthentications}"
+			<c:forEach var="proxy" items="${chainedAuthentications}"
 					varStatus="loopStatus" begin="0"
 					end="${fn:length(chainedAuthentications)}"
 step="1"><cas:proxy>${fn:escapeXml(proxy.principal.id)}</cas:proxy>

@@ -41,7 +41,7 @@ public class BasicTestJunit {
 	private static final String USER = "A";
 	private static final String PWD = "A";
 	private static String TGT;
-	private static String CAS_SERVER = "[cas server url]";
+	private static String CAS_SERVER = "[CAS SERVER]";
 	private static String CAS_PROXY_CALLBACK = CAS_SERVER + "/casProxy";
 	private static BasicRestClient UTIL;
 	private static String PGT;

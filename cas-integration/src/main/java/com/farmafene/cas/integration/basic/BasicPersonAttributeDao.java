@@ -68,14 +68,16 @@ public class BasicPersonAttributeDao implements IPersonAttributeDao {
 
 		Map<String, List<Object>> attributes = new LinkedHashMap<String, List<Object>>();
 		List<Object> values = new ArrayList<Object>();
-		attributes.put("customAttribute", Arrays.asList(new Object[]{"00000000T"}));
-		attributes.put("item1", Arrays.asList(new Object[]{"value1"}));
-		attributes.put("item2", Arrays.asList(new Object[]{"value2"}));
-		attributes.put("item3", Arrays.asList(new Object[]{"value3"}));
+		attributes.put("customAttribute",
+				Arrays.asList(new Object[] { "00000000T" }));
+		attributes.put("item1", Arrays.asList(new Object[] { "value1" }));
+		attributes.put("item2", Arrays.asList(new Object[] { "value2" }));
+		attributes.put("item3", Arrays.asList(new Object[] { "value3" }));
 		values.add("ROLE_01");
 		values.add("ROLE_02");
 		attributes.put("memberOf", values);
 		NamedPersonImpl impl = new NamedPersonImpl(uid, attributes);
+		logger.info("Returning: {}", impl);
 		return impl;
 	}
 
