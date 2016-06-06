@@ -12,7 +12,7 @@
     <!-- Validation Response Protocol Views: /proxyValidate, /serviceValidate -->
 
     <bean id="cas2JstlSuccessView" class="org.springframework.web.servlet.view.JstlView"
-          c:url="/WEB-INF/view/jsp/protocol/2.0/casServiceValidationSuccess.jsp" />
+          c:url="/WEB-INF/view/jsp/protocol/2.0/casServiceValidationSuccess_patched.jsp" />
 
     <!-- Failure Validation Views -->
     <bean id="cas2ServiceFailureView" class="org.springframework.web.servlet.view.JstlView"

@@ -48,7 +48,6 @@ public class ProxyTicketServer extends HttpServlet {
 
 	public ProxyTicketServer() {
 		super();
-		logger.info("Hemos inicializado el casProxy!");
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -66,7 +65,7 @@ public class ProxyTicketServer extends HttpServlet {
 			out.println(persistentAdapter.get(pgtIou));
 			out.flush();
 			persistentAdapter.remove(pgtIou);
-			logger.info("ProxyTicket removed from storage");
+			logger.info("ProxyTicket removed from storage {}");
 		}
 	}
 

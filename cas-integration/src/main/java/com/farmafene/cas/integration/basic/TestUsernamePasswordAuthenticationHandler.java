@@ -28,6 +28,7 @@ import java.security.GeneralSecurityException;
 import javax.security.auth.login.FailedLoginException;
 
 import org.jasig.cas.authentication.AuthenticationHandler;
+import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.cas.authentication.PreventedException;
 import org.jasig.cas.authentication.UsernamePasswordCredential;
@@ -54,6 +55,18 @@ public class TestUsernamePasswordAuthenticationHandler extends
 	@Override
 	public String getName() {
 		return this.getClass().getCanonicalName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.jasig.cas.authentication.handler.support.AbstractUsernamePasswordAuthenticationHandler#supports(org.jasig.cas.authentication.Credential)
+	 */
+	@Override
+	public boolean supports(Credential credential) {
+		logger.info("Tratando de establecer credendiales: {} - {}", credential
+				.getClass().getSimpleName(), credential);
+		return super.supports(credential);
 	}
 
 	/**

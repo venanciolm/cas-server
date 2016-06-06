@@ -13,8 +13,9 @@
 
 
 	<util:map id="authenticationHandlersResolvers">
-		<entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
 		<entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
+		<!--  utilizado para  proxies -->
+		<entry key-ref="primaryProxyAuthenticationHandler" value-ref="proxyPrincipalResolver" /> 
 	</util:map>
 
 	<util:list id="authenticationMetadataPopulators">
@@ -45,8 +46,6 @@
 	</util:map>
 
 	<alias name="serviceThemeResolver" alias="themeResolver" />
-
-	<alias name="jsonServiceRegistryDao" alias="serviceRegistryDao" />
 
 	<alias name="defaultTicketRegistry" alias="ticketRegistry" />
 
