@@ -14,22 +14,20 @@
 	<alias name="attributeRepositoryDefault" alias="attributeRepository" />
 	<bean id="attributeRepositoryDefault"
 		class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
-		p:backingMap-ref="attrRepoBackingMap" 
-	
-		<util:map id="attrRepoBackingMap">
-			<entry key="uid" value="uid" />
-			<entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
-			<entry key="groupMembership" value="groupMembership" />
-			<entry>
-				<key>
-					<value>memberOf</value>
-				</key>
-				<list>
-					<value>faculty</value>
-					<value>staff</value>
-					<value>org</value>
-				</list>
-			</entry>
-		</util:map>
-		/>
+		p:backingMap-ref="attrRepoBackingMap" />
+	<util:map id="attrRepoBackingMap">
+		<entry key="uid" value="uid" />
+		<entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
+		<entry key="groupMembership" value="groupMembership" />
+		<entry>
+			<key>
+				<value>memberOf</value>
+			</key>
+			<list>
+				<value>faculty</value>
+				<value>staff</value>
+				<value>org</value>
+			</list>
+		</entry>
+	</util:map>
 </beans>

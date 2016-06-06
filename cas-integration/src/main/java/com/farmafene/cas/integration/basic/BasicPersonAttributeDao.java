@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.services.persondir.IPersonAttributeDao;
 import org.jasig.services.persondir.IPersonAttributes;
 import org.jasig.services.persondir.support.NamedPersonImpl;
@@ -40,6 +41,8 @@ public class BasicPersonAttributeDao implements IPersonAttributeDao {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(BasicPersonAttributeDao.class);
+
+	private IPrincipalInChain principalChain = new PrincipalInChainDummy();
 
 	public BasicPersonAttributeDao() {
 		logger.info("{}<init>", this);
@@ -67,9 +70,22 @@ public class BasicPersonAttributeDao implements IPersonAttributeDao {
 	public IPersonAttributes getPerson(String uid) {
 
 		Map<String, List<Object>> attributes = new LinkedHashMap<String, List<Object>>();
+		HandlerResult result = principalChain.get(uid);
+		if (null != result) {
+			for (String key : result.getPrincipal().getAttributes().keySet()) {
+				Object item = result.getPrincipal().getAttributes().get(key);
+				List<Object> itemList = null;
+				if (item instanceof List) {
+					@SuppressWarnings("unchecked")
+					List<Object> itemTemp = (List<Object>) item;
+					itemList = itemTemp;
+				} else {
+					itemList = Arrays.asList(new Object[] { item });
+				}
+				attributes.put(key, itemList);
+			}
+		}
 		List<Object> values = new ArrayList<Object>();
-		attributes.put("customAttribute",
-				Arrays.asList(new Object[] { "00000000T" }));
 		attributes.put("item1", Arrays.asList(new Object[] { "value1" }));
 		attributes.put("item2", Arrays.asList(new Object[] { "value2" }));
 		attributes.put("item3", Arrays.asList(new Object[] { "value3" }));
@@ -173,5 +189,20 @@ public class BasicPersonAttributeDao implements IPersonAttributeDao {
 		logger.info("deprecated:getUserAttributes({})", uid);
 		// FIXME
 		return null;
+	}
+
+	/**
+	 * @return the principalChain
+	 */
+	public IPrincipalInChain getPrincipalChain() {
+		return principalChain;
+	}
+
+	/**
+	 * @param principalChain
+	 *            the principalChain to set
+	 */
+	public void setPrincipalChain(IPrincipalInChain principalChain) {
+		this.principalChain = principalChain;
 	}
 }

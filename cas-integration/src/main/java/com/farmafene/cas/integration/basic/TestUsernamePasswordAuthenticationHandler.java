@@ -24,6 +24,8 @@
 package com.farmafene.cas.integration.basic;
 
 import java.security.GeneralSecurityException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.security.auth.login.FailedLoginException;
 
@@ -41,6 +43,7 @@ public class TestUsernamePasswordAuthenticationHandler extends
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TestUsernamePasswordAuthenticationHandler.class);
+	private IPrincipalInChain principalChain = new PrincipalInChainDummy();
 
 	public TestUsernamePasswordAuthenticationHandler() {
 	}
@@ -69,9 +72,28 @@ public class TestUsernamePasswordAuthenticationHandler extends
 		if (!cred.getUsername().equals(cred.getPassword())) {
 			throw new FailedLoginException();
 		}
+		Map<String, Object> attributes = new LinkedHashMap<String, Object>();
+		attributes.put("customAttribute", "00000000T");
 		result = createHandlerResult(cred,
-				this.principalFactory.createPrincipal(cred.getUsername()), null);
+				this.principalFactory.createPrincipal(cred.getUsername(),
+						attributes), null);
 		logger.info("El valor de retorno es: {}", result);
+		principalChain.put(result);
 		return result;
+	}
+
+	/**
+	 * @return the principalChain
+	 */
+	public IPrincipalInChain getPrincipalChain() {
+		return principalChain;
+	}
+
+	/**
+	 * @param principalChain
+	 *            the principalChain to set
+	 */
+	public void setPrincipalChain(IPrincipalInChain principalChain) {
+		this.principalChain = principalChain;
 	}
 }

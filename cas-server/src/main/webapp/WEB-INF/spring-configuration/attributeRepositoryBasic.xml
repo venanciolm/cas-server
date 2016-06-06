@@ -13,5 +13,7 @@
 
 	<alias name="attributeRepositoryBasic" alias="attributeRepository" />
 	<bean id="attributeRepositoryBasic"
-		class="com.farmafene.cas.integration.basic.BasicPersonAttributeDao" />
+		class="com.farmafene.cas.integration.basic.BasicPersonAttributeDao">
+		<property name="principalChain" ref="principalInChain" />
+	</bean>
 </beans>
