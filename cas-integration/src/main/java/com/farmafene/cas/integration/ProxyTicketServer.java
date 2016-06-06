@@ -32,14 +32,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.farmafene.cas.integration.basic.InMemoryMapPersistentAdapterForProxyTickets;
 
 @SuppressWarnings("serial")
 public class ProxyTicketServer extends HttpServlet {
+	private static final Logger logger = LoggerFactory
+			.getLogger(ProxyTicketServer.class);
 	private static final String PROXY_SUCCESS_RESPONSE = "<casClient:proxySuccess xmlns:casClient=\"http://www.yale.edu/tp/casClient\"/>";
 	private static final String PGT_IOU = "pgtIou";
 	private static final String PGT_ID = "pgtId";
 	private IPersistentAdapterForProxyTickets persistentAdapter = new InMemoryMapPersistentAdapterForProxyTickets();
+
+	public ProxyTicketServer() {
+		super();
+		logger.info("Hemos inicializado el casProxy!");
+	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,12 +60,26 @@ public class ProxyTicketServer extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println(PROXY_SUCCESS_RESPONSE);
 			out.flush();
+			logger.info("ProxyTicket stored!");
 		} else if (pgtIou != null) {
 			PrintWriter out = response.getWriter();
 			out.println(persistentAdapter.get(pgtIou));
 			out.flush();
 			persistentAdapter.remove(pgtIou);
+			logger.info("ProxyTicket removed from storage");
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doGet(req, resp);
 	}
 
 	/**
@@ -68,4 +92,5 @@ public class ProxyTicketServer extends HttpServlet {
 		// TODO Change de IPersistentAdapterForProxyTickets
 		super.init(config);
 	}
+
 }

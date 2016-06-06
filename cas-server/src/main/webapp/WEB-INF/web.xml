@@ -98,6 +98,10 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>CasProxy</servlet-name>
+        <servlet-class>com.farmafene.cas.integration.ProxyTicketServer</servlet-class>
+    </servlet>
 
     <servlet>
         <servlet-name>metrics-health</servlet-name>
@@ -222,6 +226,11 @@
     <servlet-mapping>
         <servlet-name>cas</servlet-name>
         <url-pattern>/v1/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CasProxy</servlet-name>
+        <url-pattern>/casProxy</url-pattern>
     </servlet-mapping>
 
     <session-config>

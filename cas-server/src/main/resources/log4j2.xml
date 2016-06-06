@@ -68,6 +68,9 @@
             <AppenderRef ref="auditlogfile"/>
             <AppenderRef ref="file"/>
         </AsyncLogger>
+        <AsyncLogger name="com.farmafene" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncLogger>
         <AsyncRoot level="error">
             <AppenderRef ref="console"/>
         </AsyncRoot>

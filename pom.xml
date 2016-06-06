@@ -248,6 +248,12 @@
 				<groupId>com.farmafene.cas</groupId>
 				<artifactId>cas-integration</artifactId>
 				<version>${project.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.jasig.cas</groupId>
@@ -338,6 +344,12 @@
 				<groupId>org.jasig.cas</groupId>
 				<artifactId>cas-server-webapp-validation</artifactId>
 				<version>${cas.VERSION}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jasig.cas</groupId>
+				<artifactId>cas-server-support-rest</artifactId>
+				<version>${cas.VERSION}</version>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>com.lmax</groupId>
