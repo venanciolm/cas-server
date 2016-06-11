@@ -41,7 +41,7 @@ public class LogoutTestJunit {
 	private static final String USER = "A";
 	private static final String PWD = "A";
 	private static String TGT;
-	private static String CAS_SERVER = "https://cas.farmafene.com";
+	private static String CAS_SERVER = "https://local.dev.farmafene.com/cas";
 	private static String CAS_PROXY_CALLBACK = CAS_SERVER + "/casProxy";
 	private static String PGT;
 	private static BasicRestClient UTIL;

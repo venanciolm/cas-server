@@ -41,7 +41,7 @@ public class BasicTestJunit {
 	private static final String USER = "A";
 	private static final String PWD = "A";
 	private static String TGT;
-	private static String CAS_SERVER = "https://visor.seinsir.indra.es/cas";
+	private static String CAS_SERVER = "https://local.dev.farmafene.com/cas";
 	private static String CAS_PROXY_CALLBACK = CAS_SERVER + "/casProxy";
 	private static BasicRestClient UTIL;
 	private static String PGT;
