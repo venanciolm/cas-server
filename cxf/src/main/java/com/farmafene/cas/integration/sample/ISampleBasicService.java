@@ -23,6 +23,31 @@
  */
 package com.farmafene.cas.integration.sample;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+
+@WebService
 public interface ISampleBasicService {
-	public SampleResponse echo(SampleRequest request);
+	@WebMethod
+	@WebResult(
+	//
+	name = "SampleResponse",
+	//
+	partName = "SampleResponse",
+	//
+	targetNamespace = "http://samples.farmafene.com/cxf/schema"
+	//
+	)
+	public SampleResponse echo(//
+			@WebParam(
+			//
+			name = "SampleRequest",
+			//
+			partName = "SampleRequest",
+			//
+			targetNamespace = "http://samples.farmafene.com/cxf/schema"
+			//
+			) SampleRequest request);
 }

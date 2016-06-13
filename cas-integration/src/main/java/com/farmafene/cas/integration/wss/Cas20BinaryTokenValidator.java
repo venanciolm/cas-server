@@ -28,7 +28,6 @@ import org.apache.wss4j.dom.handler.RequestData;
 import org.apache.wss4j.dom.validate.Credential;
 import org.apache.wss4j.dom.validate.Validator;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
-import org.jasig.cas.client.proxy.ProxyRetriever;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
@@ -39,7 +38,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 	private String service;
 	private String casServerUrlPrefix;
 	private String proxyCallbackUrl;
-	private ProxyRetriever proxyRetriever;
+	private ProxyGrantingTicketStorage proxyGrantingTicketStorage;
 
 	public Cas20BinaryTokenValidator() {
 	}
@@ -54,8 +53,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 		Assert.notNull(service, "Debe establecerse el servicio");
 		Assert.notNull(casServerUrlPrefix, "Debe establecerse servicio de CAS");
 		if (null != proxyCallbackUrl) {
-			Assert.notNull(proxyRetriever,
-					"Si se establece un callback, debe establecerse un retriever");
+			Assert.notNull(proxyGrantingTicketStorage);
 		}
 	}
 
@@ -77,7 +75,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 			Cas20ServiceTicketValidator ticketValidator = new Cas20ServiceTicketValidator(
 					casServerUrlPrefix);
 			if (null != proxyCallbackUrl) {
-				ProxyGrantingTicketStorage proxyGrantingTicketStorage = new ProxyGrantingTicketStorage() {
+				ProxyGrantingTicketStorage proxyGrantingTicketStorageWrapper = new ProxyGrantingTicketStorage() {
 
 					/**
 					 * {@inheritDoc}
@@ -97,7 +95,8 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 					 */
 					@Override
 					public String retrieve(String proxyGrantingTicketIou) {
-						String grantingTicket = retrieve(proxyGrantingTicketIou);
+						String grantingTicket = proxyGrantingTicketStorage
+								.retrieve(proxyGrantingTicketIou);
 						principal.setGrantingTicket(grantingTicket);
 						return grantingTicket;
 					}
@@ -113,7 +112,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 				};
 				ticketValidator.setProxyCallbackUrl(proxyCallbackUrl);
 				ticketValidator
-						.setProxyGrantingTicketStorage(proxyGrantingTicketStorage);
+						.setProxyGrantingTicketStorage(proxyGrantingTicketStorageWrapper);
 			}
 			assertion = ticketValidator.validate(ticket, service);
 		} catch (TicketValidationException e) {
@@ -176,18 +175,17 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 	}
 
 	/**
-	 * @return the proxyRetriever
+	 * @return the proxyGrantingTicketStorage
 	 */
-	public ProxyRetriever getProxyRetriever() {
-		return proxyRetriever;
+	public ProxyGrantingTicketStorage getProxyGrantingTicketStorage() {
+		return proxyGrantingTicketStorage;
 	}
 
 	/**
-	 * @param proxyRetriever
-	 *            the proxyRetriever to set
+	 * @param proxyGrantingTicketStorage the proxyGrantingTicketStorage to set
 	 */
-	public void setProxyRetriever(ProxyRetriever proxyRetriever) {
-		this.proxyRetriever = proxyRetriever;
+	public void setProxyGrantingTicketStorage(
+			ProxyGrantingTicketStorage proxyGrantingTicketStorage) {
+		this.proxyGrantingTicketStorage = proxyGrantingTicketStorage;
 	}
-
 }

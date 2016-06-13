@@ -36,18 +36,18 @@ import com.farmafene.cas.integration.sample.ISampleBasicService;
 import com.farmafene.cas.integration.sample.SampleRequest;
 import com.farmafene.cas.integration.sample.SampleResponse;
 
-@Service("sampleBasicImpl")
-public class SampleBasicImpl implements ISampleBasicService {
+@Service("sample2BasicImpl")
+public class Sample2BasicImpl implements ISampleBasicService {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(SampleBasicImpl.class);
+			.getLogger(Sample2BasicImpl.class);
 	private WebServiceContext wsctx = new WebServiceContextImpl();
 
 	@Autowired
-	@Qualifier("sample2BasicClient")
+	@Qualifier("sample3BasicClient")
 	ISampleBasicService service;
 
-	public SampleBasicImpl() {
+	public Sample2BasicImpl() {
 
 	}
 

@@ -23,6 +23,8 @@
  */
 package com.farmafene.cas.integration.clients;
 
+import org.apache.wss4j.common.ext.WSSecurityException;
+
 public interface ICasServiceTicketFactory {
-	String getServiceToken(String serviceName);
+	String getServiceToken(String serviceName) throws WSSecurityException;
 }

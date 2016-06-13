@@ -21,13 +21,15 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.farmafene.cas.integration.sample.impl;
+package com.farmafene.cas.integration.sample.ws;
 
-import javax.xml.ws.WebServiceContext;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.ws.soap.MTOM;
 
-import org.apache.cxf.jaxws.context.WebServiceContextImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -36,43 +38,47 @@ import com.farmafene.cas.integration.sample.ISampleBasicService;
 import com.farmafene.cas.integration.sample.SampleRequest;
 import com.farmafene.cas.integration.sample.SampleResponse;
 
-@Service("sampleBasicImpl")
-public class SampleBasicImpl implements ISampleBasicService {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(SampleBasicImpl.class);
-	private WebServiceContext wsctx = new WebServiceContextImpl();
+@Service("sample3BasicEndPoint")
+@WebService(
+//
+targetNamespace = "http://samples.farmafene.com/cxf/schema",
+//
+serviceName = "sampleBasic",
+//
+portName = "sampleBasicPort",
+//
+name = "sampleBasicBinding"
+//
+)
+@MTOM
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+public class Sample3BasicImpl implements ISampleBasicService {
 
 	@Autowired
-	@Qualifier("sample2BasicClient")
-	ISampleBasicService service;
+	@Qualifier("sample3Basic")
+	private ISampleBasicService service;
 
-	public SampleBasicImpl() {
+	@WebMethod
+	@WebResult(
+	//
+	name = "SampleResponse",
+	//
+	partName = "SampleResponse",
+	//
+	targetNamespace = "http://samples.farmafene.com/cxf/schema"
+	//
+	)
+	public SampleResponse echo(//
+			@WebParam(
+			//
+			name = "SampleRequest",
+			//
+			partName = "SampleRequest",
+			//
+			targetNamespace = "http://samples.farmafene.com/cxf/schema"
+			//
+			) SampleRequest request) {
 
+		return this.service.echo(request);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.farmafene.cas.integration.sample.ISampleBasicService#echo(com.farmafene.cas.integration.sample.SampleRequest)
-	 */
-	@Override
-	public SampleResponse echo(SampleRequest request) {
-		SampleResponse response = new SampleResponse();
-		response.setMessage(request.getMessage());
-		logger.info("Context {}", wsctx);
-		if (wsctx != null) {
-			logger.info("Principal {}", wsctx.getClass());
-			logger.info("Principal {}", wsctx.getUserPrincipal());
-			if (null != wsctx.getUserPrincipal()) {
-				logger.info("Principal Name es  {}", wsctx.getUserPrincipal()
-						.getName());
-				logger.info("¿Está el role {}?, {} ", "ROLE_01",
-						wsctx.isUserInRole("ROLE_01"));
-			}
-		}
-		logger.info("El servicio es: {}", service);
-		return service.echo(request);
-	}
-
 }

@@ -18,12 +18,29 @@
 	default-lazy-init="false">
 
 	<bean id="logInBound" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
-	<bean id="ChangeContext" class="com.farmafene.cas.integration.wss.InjectCasSecurityContext" />
-	<bean id="Logout" class="com.farmafene.cas.integration.wss.LogoutInCasSecurityContext" />
+	<bean id="ChangeContext"
+		class="com.farmafene.cas.integration.wss.InjectCasSecurityContext" />
+	<bean id="Logout"
+		class="com.farmafene.cas.integration.wss.LogoutInCasSecurityContext" />
 	<bean id="logOutBound" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 	<bean name="uValidator"
 		class="com.farmafene.cas.integration.wss.Cas20UserNameTokenValidator">
 		<property name="service" value="${cxf.test.serviceUri}" />
+		<property name="casServerUrlPrefix" value="${cas.server.url}" />
+	</bean>
+	<bean name="bValidator"
+		class="com.farmafene.cas.integration.wss.Cas20BinaryTokenValidator">
+		<property name="service" value="${cxf.test.serviceUri}" />
+		<property name="casServerUrlPrefix" value="${cas.server.url}" />
+		<property name="proxyCallbackUrl" value="${cas.server.proxyUrl}" />
+		<property name="proxyGrantingTicketStorage" ref="grantingTicketStorage" />
+	</bean>
+	<bean id="grantingTicketStorage"
+		class="com.farmafene.cas.integration.wss.ProxyGrantingTicketStorageForTicketServer">
+		<property name="retrieveUrl" value="${cas.server.proxyRetrieveUrl}" />
+	</bean>
+	<bean id="ICasServiceTicketFactory"
+		class="com.farmafene.cas.integration.wss.CxfICasServiceTicketFactory">
 		<property name="casServerUrlPrefix" value="${cas.server.url}" />
 	</bean>
 </beans>

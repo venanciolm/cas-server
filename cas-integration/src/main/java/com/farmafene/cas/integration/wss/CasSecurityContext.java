@@ -80,7 +80,11 @@ public class CasSecurityContext implements SecurityContext {
 		BasicRestClient client = new BasicRestClient();
 		client.setCasServerUrlPrefix(principal.getCasServerUrlPrefix());
 		logger.info("La url es: {}", principal.getCasServerUrlPrefix());
-		client.logout(principal.getGrantingTicket());
+		try {
+			client.logout(principal.getGrantingTicket());
+		} catch (IllegalStateException e) {
+			logger.warn("Se ha producido un error en el Logout!",e);
+		}
 	}
 
 	public String getCustomAttribute() {

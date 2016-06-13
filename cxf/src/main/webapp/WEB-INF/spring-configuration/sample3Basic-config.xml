@@ -16,8 +16,34 @@
 		http://cxf.apache.org/policy http://cxf.apache.org/schemas/policy.xsd
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
 	default-lazy-init="false">
-	
-	<alias name="sampleBasicImpl" alias="sampleBasic" />
-	<alias name="sample2BasicImpl" alias="sample2Basic" />
-	<alias name="sample3BasicImpl" alias="sample3Basic" />
+
+	<jaxws:endpoint id="sample3BasicWS" implementor="#sample3BasicEndPoint"
+		address="/sample3Basic">
+		<jaxws:properties>
+			<entry key="mtom-enabled" value="true" />
+			<entry key="ws-security.ut.validator" value-ref="uValidator" />
+			<entry key="ws-security.bst.validator" value-ref="bValidator" />
+		</jaxws:properties>
+		<jaxws:features>
+			<wp:policies>
+				<wsp:PolicyReference xmlns:wsp="http://www.w3.org/ns/ws-policy"
+					URI="classpath:/policies/bst-policy.xml" />
+			</wp:policies>
+		</jaxws:features>
+		<jaxws:inInterceptors>
+			<ref bean="ChangeContext" />
+			<ref bean="Logout" />
+			<ref bean="logInBound" />
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="logOutBound" />
+		</jaxws:outInterceptors>
+	</jaxws:endpoint>
+	<bean name="sample3BasicClient" lazy-init="true"
+		class="com.farmafene.cas.integration.spring.CasClientProxyFactoryBean">
+		<property name="serviceClass" value="com.farmafene.cas.integration.sample.ISampleBasicService" />
+		<property name="serviceName" value="${cxf.test.serviceUri}" />
+		<property name="address" value="${cxf.test.serviceBase}/sample3Basic?wsdl" />
+		<property name="serviceTicketFactory" ref="ICasServiceTicketFactory" />
+	</bean>
 </beans>

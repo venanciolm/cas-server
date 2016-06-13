@@ -37,6 +37,7 @@ import org.apache.cxf.common.util.Base64Utility;
 import org.apache.cxf.headers.Header;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.apache.wss4j.common.ext.WSSecurityException;
 
 public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 
@@ -67,7 +68,13 @@ public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 		}
 	}
 
-	private List<Header> addSecurityHeader() throws SOAPException {
+	private List<Header> addSecurityHeader() throws SOAPException, WSSecurityException {
+		String ticket = null;
+		ticket = serviceTicketFactory.getServiceToken(serviceName);
+		if (null == ticket) {
+			throw new SOAPException(
+					"No ha sido posible recuperar un ticket valido");
+		}
 		final List<Header> headers = new ArrayList<Header>();
 		final SOAPFactory sf = SOAPFactory.newInstance();
 		final SOAPElement securityElement = sf.createElement("Security",
@@ -78,11 +85,6 @@ public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 		authElement.setAttribute("EncodingType", BASE64_BINARY_ENCODING);
 		authElement.setAttribute("wsu:Id", "CasSecurityToken");
 		authElement.addAttribute(new QName("xmlns:wsu"), XMLNS_WSU);
-		String ticket = serviceTicketFactory.getServiceToken(serviceName);
-		if (null == ticket) {
-			throw new SOAPException(
-					"No ha sido posible recuperar un ticket valido");
-		}
 		authElement.addTextNode(Base64Utility.encode(ticket.getBytes()));
 		securityElement.addChildElement(authElement);
 		headers.add(new SoapHeader(new QName(null, "Security"), securityElement));

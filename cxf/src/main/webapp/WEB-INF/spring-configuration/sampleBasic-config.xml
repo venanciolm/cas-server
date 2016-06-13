@@ -16,8 +16,27 @@
 		http://cxf.apache.org/policy http://cxf.apache.org/schemas/policy.xsd
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
 	default-lazy-init="false">
-	
-	<alias name="sampleBasicImpl" alias="sampleBasic" />
-	<alias name="sample2BasicImpl" alias="sample2Basic" />
-	<alias name="sample3BasicImpl" alias="sample3Basic" />
+
+	<jaxws:endpoint id="sampleBasicWS" implementor="#sampleBasicEndPoint"
+		address="/sampleBasic">
+		<jaxws:properties>
+			<entry key="mtom-enabled" value="true" />
+			<entry key="ws-security.ut.validator" value-ref="uValidator" />
+			<entry key="ws-security.bst.validator" value-ref="bValidator" />
+		</jaxws:properties>
+		<jaxws:features>
+			<wp:policies>
+				<wsp:PolicyReference xmlns:wsp="http://www.w3.org/ns/ws-policy"
+					URI="classpath:/policies/bst-policy.xml" />
+			</wp:policies>
+		</jaxws:features>
+		<jaxws:inInterceptors>
+			<ref bean="ChangeContext" />
+			<ref bean="Logout" />
+			<ref bean="logInBound" />
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="logOutBound" />
+		</jaxws:outInterceptors>
+	</jaxws:endpoint>
 </beans>

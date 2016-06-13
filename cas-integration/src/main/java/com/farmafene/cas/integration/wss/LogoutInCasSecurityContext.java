@@ -56,4 +56,19 @@ public class LogoutInCasSecurityContext extends
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.cxf.phase.AbstractPhaseInterceptor#handleFault(org.apache.cxf.message.Message)
+	 */
+	@Override
+	public void handleFault(Message message) {
+		SecurityContext sc = message.get(SecurityContext.class);
+		logger.info("Validando si existe Logout {}", sc);
+		if (sc instanceof CasSecurityContext) {
+			logger.info("Procediendo al logout");
+			((CasSecurityContext) sc).logout();
+		}
+	}
+
 }
