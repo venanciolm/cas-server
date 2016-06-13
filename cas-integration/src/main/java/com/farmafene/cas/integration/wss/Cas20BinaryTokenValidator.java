@@ -23,18 +23,25 @@
  */
 package com.farmafene.cas.integration.wss;
 
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.dom.handler.RequestData;
 import org.apache.wss4j.dom.validate.Credential;
 import org.apache.wss4j.dom.validate.Validator;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
+import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(Cas20BinaryTokenValidator.class);
 	private String service;
 	private String casServerUrlPrefix;
 	private String proxyCallbackUrl;
@@ -69,10 +76,13 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 
 		String ticket = new String(credential.getBinarySecurityToken()
 				.getToken());
+		logger.info("==========================================================================");
+		logger.info("Estamos Validando el token  {}", ticket);
+		logger.info("==========================================================================");
 		Assertion assertion = null;
 		final CasTokenPrincipal principal = new CasTokenPrincipal();
 		try {
-			Cas20ServiceTicketValidator ticketValidator = new Cas20ServiceTicketValidator(
+			Cas20ProxyTicketValidator ticketValidator = new Cas20ProxyTicketValidator(
 					casServerUrlPrefix);
 			if (null != proxyCallbackUrl) {
 				ProxyGrantingTicketStorage proxyGrantingTicketStorageWrapper = new ProxyGrantingTicketStorage() {
@@ -97,6 +107,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 					public String retrieve(String proxyGrantingTicketIou) {
 						String grantingTicket = proxyGrantingTicketStorage
 								.retrieve(proxyGrantingTicketIou);
+						logger.debug("Recuperado el PGT: {}", grantingTicket);
 						principal.setGrantingTicket(grantingTicket);
 						return grantingTicket;
 					}
@@ -113,6 +124,7 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 				ticketValidator.setProxyCallbackUrl(proxyCallbackUrl);
 				ticketValidator
 						.setProxyGrantingTicketStorage(proxyGrantingTicketStorageWrapper);
+				ticketValidator.setAcceptAnyProxy(true);
 			}
 			assertion = ticketValidator.validate(ticket, service);
 		} catch (TicketValidationException e) {
@@ -126,6 +138,13 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 		principal.setTokenElement(credential.getBinarySecurityToken()
 				.getElement());
 		credential.setPrincipal(principal);
+		Message msg = PhaseInterceptorChain.getCurrentMessage();
+		if (msg == null) {
+			throw new IllegalStateException("Current message is not available");
+		}
+		CasSecurityContext casCtx = new CasSecurityContext();
+		casCtx.setCasTokenPrincipal(principal);
+		msg.put(CasSecurityContext.class, casCtx);
 		return credential;
 	}
 
@@ -182,7 +201,8 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 	}
 
 	/**
-	 * @param proxyGrantingTicketStorage the proxyGrantingTicketStorage to set
+	 * @param proxyGrantingTicketStorage
+	 *            the proxyGrantingTicketStorage to set
 	 */
 	public void setProxyGrantingTicketStorage(
 			ProxyGrantingTicketStorage proxyGrantingTicketStorage) {

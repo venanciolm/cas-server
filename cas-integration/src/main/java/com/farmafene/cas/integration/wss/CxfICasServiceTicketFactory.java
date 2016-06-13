@@ -71,7 +71,6 @@ public class CxfICasServiceTicketFactory implements ICasServiceTicketFactory,
 			WSSecurityException wsse = new WSSecurityException(
 					WSSecurityException.ErrorCode.INVALID_SECURITY_TOKEN);
 			throw wsse;
-
 		}
 		CasTokenPrincipal casPrincipal = (CasTokenPrincipal) principal;
 		if (casPrincipal.isProxyGrantingTicket()) {

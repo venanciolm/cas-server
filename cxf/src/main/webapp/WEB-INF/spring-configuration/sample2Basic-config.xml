@@ -20,7 +20,7 @@
 	<jaxws:endpoint id="sample2BasicWS" implementor="#sample2BasicEndPoint"
 		address="/sample2Basic">
 		<jaxws:properties>
-			<entry key="mtom-enabled" value="true" />
+			<!-- <entry key="mtom-enabled" value="true" /> -->
 			<entry key="ws-security.ut.validator" value-ref="uValidator" />
 			<entry key="ws-security.bst.validator" value-ref="bValidator" />
 		</jaxws:properties>

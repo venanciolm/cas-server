@@ -23,17 +23,15 @@
  */
 package com.farmafene.cas.integration.basic;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.farmafene.cas.integration.IPersistentAdapterForProxyTickets;
 
 public class InMemoryMapPersistentAdapterForProxyTickets implements
 		IPersistentAdapterForProxyTickets {
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private Map pgtMap = Collections.synchronizedMap(new HashMap());
+	private Map<String, String> pgtMap = new ConcurrentHashMap<String, String>();
 
 	public InMemoryMapPersistentAdapterForProxyTickets() {
 	}
@@ -60,7 +58,6 @@ public class InMemoryMapPersistentAdapterForProxyTickets implements
 	 * @see com.farmafene.cas.integration.IPersistentAdapterForProxyTickets#save(java.lang.String,
 	 *      java.lang.String)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void save(String pgtIou, String pgtId) {
 		pgtMap.put(pgtIou, pgtId);
@@ -73,7 +70,7 @@ public class InMemoryMapPersistentAdapterForProxyTickets implements
 	 */
 	@Override
 	public String get(String pgtIou) {
-		return (String) pgtMap.get(pgtIou);
+		return pgtMap.get(pgtIou);
 	}
 
 	/**
@@ -83,7 +80,7 @@ public class InMemoryMapPersistentAdapterForProxyTickets implements
 	 */
 	@Override
 	public String remove(String pgtIou) {
-		return (String) pgtMap.remove(pgtIou);
+		return pgtMap.remove(pgtIou);
 
 	}
 

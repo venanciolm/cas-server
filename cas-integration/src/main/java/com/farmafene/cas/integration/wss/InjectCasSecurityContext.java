@@ -55,6 +55,14 @@ public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> 
 			client.setCasServerUrlPrefix(ctp.getCasServerUrlPrefix());
 			message.put(SecurityContext.class, ctx);
 			return;
+		} else if (message.get(CasSecurityContext.class) != null) {
+			CasSecurityContext csc = (CasSecurityContext) message
+					.get(CasSecurityContext.class);
+			BasicRestClient client = new BasicRestClient();
+			client.setCasServerUrlPrefix(((CasTokenPrincipal) csc
+					.getUserPrincipal()).getCasServerUrlPrefix());
+			message.put(SecurityContext.class, csc);
+			return;
 		}
 		throw new Fault(new WSSecurityException(
 				WSSecurityException.ErrorCode.INVALID_SECURITY_TOKEN));

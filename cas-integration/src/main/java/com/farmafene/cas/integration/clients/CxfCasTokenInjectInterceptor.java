@@ -42,7 +42,6 @@ import org.apache.wss4j.common.ext.WSSecurityException;
 public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 
 	private static final String BASE64_BINARY_ENCODING = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary";
-	private static final String TOKEN_PROFILE = "http://docs.oasis-open.org/wss/oasiswss-kerberos-token-profile-1.1#CASTOKEN";
 	private static final String XSD_WSSE = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
 	private static final String XMLNS_WSU = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-utility-1.0.xsd";
 
@@ -68,7 +67,8 @@ public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 		}
 	}
 
-	private List<Header> addSecurityHeader() throws SOAPException, WSSecurityException {
+	private List<Header> addSecurityHeader() throws SOAPException,
+			WSSecurityException {
 		String ticket = null;
 		ticket = serviceTicketFactory.getServiceToken(serviceName);
 		if (null == ticket) {
@@ -81,9 +81,9 @@ public class CxfCasTokenInjectInterceptor extends WSS4JOutInterceptor {
 				"wsse", XSD_WSSE);
 		final SOAPElement authElement = sf.createElement("BinarySecurityToken",
 				"wsse", XSD_WSSE);
-		authElement.setAttribute("ValueType", TOKEN_PROFILE);
+		authElement.setAttribute("ValueType", "uri:farmafene.com#CASTOKEN");
 		authElement.setAttribute("EncodingType", BASE64_BINARY_ENCODING);
-		authElement.setAttribute("wsu:Id", "CasSecurityToken");
+		authElement.setAttribute("wsu:Id", "CasServiceTicket");
 		authElement.addAttribute(new QName("xmlns:wsu"), XMLNS_WSU);
 		authElement.addTextNode(Base64Utility.encode(ticket.getBytes()));
 		securityElement.addChildElement(authElement);

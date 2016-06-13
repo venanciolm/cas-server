@@ -572,7 +572,7 @@ public class BasicRestClient {
 		try {
 			con = getHttpConnection(casServerUrlPrefix + restServlet + "/"
 					+ ticketGrantingTicket, Method.DELETE, connectTimeoutMs,
-					readTimeoutMs, encoding, CONTENT_TYPE, false);
+					100, encoding, CONTENT_TYPE, false);
 			con.setUseCaches(false);
 			con.connect();
 			int responseCode = con.getResponseCode();
@@ -588,7 +588,9 @@ public class BasicRestClient {
 						+ responseCode + " - " + con.getResponseMessage());
 			}
 		} catch (IOException e) {
-			throw new IllegalStateException(e);
+			logger.warn(
+					"Se ha producido el error '{}' en la comunicación con el socket",
+					e.getMessage());
 		} finally {
 			if (null != con) {
 				con.disconnect();
