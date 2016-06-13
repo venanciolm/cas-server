@@ -20,4 +20,5 @@
 	<alias name="sampleBasicImpl" alias="sampleBasic" />
 	<alias name="sample2BasicImpl" alias="sample2Basic" />
 	<alias name="sample3BasicImpl" alias="sample3Basic" />
+	<alias name="sample4BasicImpl" alias="sample4Basic" />
 </beans>

@@ -46,7 +46,7 @@
 		class="com.farmafene.cas.integration.spring.CasClientProxyFactoryBean">
 		<property name="serviceClass" value="com.farmafene.cas.integration.sample.ISampleBasicService" />
 		<property name="serviceName" value="${cxf.test.serviceUri}" />
-		<property name="address" value="${cxf.test.serviceBase}/sample3Basic?wsdl" />
+		<property name="address" value="${cxf.test.serviceBase}/sample3Basic" />
 		<property name="serviceTicketFactory" ref="ICasServiceTicketFactory" />
 	</bean>
 </beans>

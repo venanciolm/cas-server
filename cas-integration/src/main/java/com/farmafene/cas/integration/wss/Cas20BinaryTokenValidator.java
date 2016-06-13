@@ -106,6 +106,12 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 		principal.setTokenElement(credential.getBinarySecurityToken()
 				.getElement());
 		credential.setPrincipal(principal);
+		//
+		//
+		// Si se lanza, debería llegar al interceptor,
+		// pero lo pierde. De esta forma, lo enviamos y lo
+		// recuperamos en el interceptor.
+		//
 		Message msg = PhaseInterceptorChain.getCurrentMessage();
 		if (msg == null) {
 			throw new IllegalStateException("Current message is not available");

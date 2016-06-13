@@ -28,25 +28,20 @@ import javax.xml.ws.WebServiceContext;
 import org.apache.cxf.jaxws.context.WebServiceContextImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.farmafene.cas.integration.sample.ISampleBasicService;
 import com.farmafene.cas.integration.sample.SampleRequest;
 import com.farmafene.cas.integration.sample.SampleResponse;
 
-@Service("sample3BasicImpl")
-public class Sample3BasicImpl implements ISampleBasicService {
+@Service("sample4BasicImpl")
+public class Sample4BasicImpl implements ISampleBasicService {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(Sample3BasicImpl.class);
-	@Autowired
-	@Qualifier("sample4BasicClient")
-	ISampleBasicService service;
+			.getLogger(Sample4BasicImpl.class);
 	private WebServiceContext wsctx = new WebServiceContextImpl();
 
-	public Sample3BasicImpl() {
+	public Sample4BasicImpl() {
 
 	}
 
@@ -70,7 +65,7 @@ public class Sample3BasicImpl implements ISampleBasicService {
 						wsctx.isUserInRole("ROLE_01"));
 			}
 		}
-		return service.echo(request);
+		return response;
 	}
 
 }
