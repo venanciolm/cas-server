@@ -91,9 +91,16 @@ public class BasicPersonAttributeDao implements IPersonAttributeDao {
 		attributes.put("item3", Arrays.asList(new Object[] { "value3" }));
 		values.add("ROLE_01");
 		values.add("ROLE_02");
-		attributes.put("memberOf", values);
+		StringBuilder sb = new StringBuilder();
+		for (Object a : values) {
+			if (sb.length() > 0) {
+				sb.append(",");
+			}
+			sb.append(a);
+		}
+		attributes.put("memberOf",
+				Arrays.asList(new Object[] { sb.toString() }));
 		NamedPersonImpl impl = new NamedPersonImpl(uid, attributes);
-		logger.info("Returning: {}", impl);
 		return impl;
 	}
 

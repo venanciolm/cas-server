@@ -64,9 +64,15 @@ public class CasSecurityContext implements SecurityContext {
 		return roles.contains(role);
 	}
 
-	private void loadRoles(LinkedHashSet<String> roles2) {
-		// TODO Auto-generated method stub
-
+	private void loadRoles(LinkedHashSet<String> rolesToLoad) {
+		String roles = (String) principal.getAssertion().getPrincipal()
+				.getAttributes().get("memberOf");
+		if (roles != null) {
+			String[] r = roles.split(",");
+			for (String i : r) {
+				rolesToLoad.add(i);
+			}
+		}
 	}
 
 	public void logout() {
@@ -83,7 +89,7 @@ public class CasSecurityContext implements SecurityContext {
 		try {
 			client.logout(principal.getGrantingTicket());
 		} catch (IllegalStateException e) {
-			logger.warn("Se ha producido un error en el Logout!",e);
+			logger.warn("Se ha producido un error en el Logout!", e);
 		}
 	}
 

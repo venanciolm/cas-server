@@ -77,7 +77,8 @@ public class BasicRestClient {
 	private static final String CONTENT_LENGTH = "Content-Length";
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String ACCEPT_ENCODING = "Accept-Encoding";
-
+	private static final int READ_TIMEOUT_LOGOUT = 100;
+	private int readTimeoutMsLogout = READ_TIMEOUT_LOGOUT;
 	private String casServerUrlPrefix;
 	private String restServlet = RESP_PATH_DEFAULT;
 	private String encoding = ENCODING;
@@ -572,7 +573,7 @@ public class BasicRestClient {
 		try {
 			con = getHttpConnection(casServerUrlPrefix + restServlet + "/"
 					+ ticketGrantingTicket, Method.DELETE, connectTimeoutMs,
-					100, encoding, CONTENT_TYPE, false);
+					readTimeoutMsLogout, encoding, CONTENT_TYPE, false);
 			con.setUseCaches(false);
 			con.connect();
 			int responseCode = con.getResponseCode();
@@ -679,6 +680,21 @@ public class BasicRestClient {
 	 */
 	public void setCasServerUrlPrefix(String casServerUrlPrefix) {
 		this.casServerUrlPrefix = casServerUrlPrefix;
+	}
+
+	/**
+	 * @return the readTimeoutMsLogout
+	 */
+	public int getReadTimeoutMsLogout() {
+		return readTimeoutMsLogout;
+	}
+
+	/**
+	 * @param readTimeoutMsLogout
+	 *            the readTimeoutMsLogout to set
+	 */
+	public void setReadTimeoutMsLogout(int readTimeoutMsLogout) {
+		this.readTimeoutMsLogout = readTimeoutMsLogout;
 	}
 
 }

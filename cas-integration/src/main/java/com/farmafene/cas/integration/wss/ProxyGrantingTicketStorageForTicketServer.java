@@ -164,4 +164,60 @@ public class ProxyGrantingTicketStorageForTicketServer implements
 		this.retrieveUrl = retrieveUrl;
 	}
 
+	/**
+	 * @return the charEncoding
+	 */
+	public String getCharEncoding() {
+		return charEncoding;
+	}
+
+	/**
+	 * @param charEncoding the charEncoding to set
+	 */
+	public void setCharEncoding(String charEncoding) {
+		this.charEncoding = charEncoding;
+	}
+
+	/**
+	 * @return the encoding
+	 */
+	public String getEncoding() {
+		return encoding;
+	}
+
+	/**
+	 * @param encoding the encoding to set
+	 */
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	/**
+	 * @return the connectTimeoutMs
+	 */
+	public int getConnectTimeoutMs() {
+		return connectTimeoutMs;
+	}
+
+	/**
+	 * @param connectTimeoutMs the connectTimeoutMs to set
+	 */
+	public void setConnectTimeoutMs(int connectTimeoutMs) {
+		this.connectTimeoutMs = connectTimeoutMs;
+	}
+
+	/**
+	 * @return the readTimeoutMs
+	 */
+	public int getReadTimeoutMs() {
+		return readTimeoutMs;
+	}
+
+	/**
+	 * @param readTimeoutMs the readTimeoutMs to set
+	 */
+	public void setReadTimeoutMs(int readTimeoutMs) {
+		this.readTimeoutMs = readTimeoutMs;
+	}
+
 }

@@ -85,42 +85,10 @@ public class Cas20BinaryTokenValidator implements InitializingBean, Validator {
 			Cas20ProxyTicketValidator ticketValidator = new Cas20ProxyTicketValidator(
 					casServerUrlPrefix);
 			if (null != proxyCallbackUrl) {
-				ProxyGrantingTicketStorage proxyGrantingTicketStorageWrapper = new ProxyGrantingTicketStorage() {
-
-					/**
-					 * {@inheritDoc}
-					 * 
-					 * @see org.jasig.cas.client.proxy.ProxyGrantingTicketStorage#save(java.lang.String,
-					 *      java.lang.String)
-					 */
-					@Override
-					public void save(String proxyGrantingTicketIou,
-							String proxyGrantingTicket) {
-					}
-
-					/**
-					 * {@inheritDoc}
-					 * 
-					 * @see org.jasig.cas.client.proxy.ProxyGrantingTicketStorage#retrieve(java.lang.String)
-					 */
-					@Override
-					public String retrieve(String proxyGrantingTicketIou) {
-						String grantingTicket = proxyGrantingTicketStorage
-								.retrieve(proxyGrantingTicketIou);
-						logger.debug("Recuperado el PGT: {}", grantingTicket);
-						principal.setGrantingTicket(grantingTicket);
-						return grantingTicket;
-					}
-
-					/**
-					 * {@inheritDoc}
-					 * 
-					 * @see org.jasig.cas.client.proxy.ProxyGrantingTicketStorage#cleanUp()
-					 */
-					@Override
-					public void cleanUp() {
-					}
-				};
+				ProxyGrantingTicketStorageDelegate proxyGrantingTicketStorageWrapper = new ProxyGrantingTicketStorageDelegate();
+				proxyGrantingTicketStorageWrapper.setPrincipal(principal);
+				proxyGrantingTicketStorageWrapper
+						.setProxyGrantingTicketStorage(proxyGrantingTicketStorage);
 				ticketValidator.setProxyCallbackUrl(proxyCallbackUrl);
 				ticketValidator
 						.setProxyGrantingTicketStorage(proxyGrantingTicketStorageWrapper);

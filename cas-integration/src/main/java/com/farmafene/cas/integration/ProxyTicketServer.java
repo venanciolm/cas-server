@@ -59,13 +59,13 @@ public class ProxyTicketServer extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.println(PROXY_SUCCESS_RESPONSE);
 			out.flush();
-			logger.info("ProxyTicket stored!");
+			logger.debug("ProxyTicket stored!");
 		} else if (pgtIou != null) {
 			PrintWriter out = response.getWriter();
 			out.println(persistentAdapter.get(pgtIou));
 			out.flush();
 			persistentAdapter.remove(pgtIou);
-			logger.info("ProxyTicket removed from storage {}");
+			logger.debug("ProxyTicket removed from storage {}", pgtIou);
 		}
 	}
 
