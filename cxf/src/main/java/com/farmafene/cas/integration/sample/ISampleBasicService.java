@@ -27,8 +27,20 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 
-@WebService
+@WebService(
+//
+targetNamespace = "http://samples.farmafene.com/cxf/schema",
+//
+serviceName = "sampleBasic",
+//
+portName = "sampleBasicPort",
+//
+name = "sampleBasicBinding"
+//
+)
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 public interface ISampleBasicService {
 	@WebMethod
 	@WebResult(

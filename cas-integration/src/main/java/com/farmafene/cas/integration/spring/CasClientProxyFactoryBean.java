@@ -95,4 +95,61 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 		return true;
 	}
 
+	/**
+	 * @return the serviceClass
+	 */
+	public Class<T> getServiceClass() {
+		return serviceClass;
+	}
+
+	/**
+	 * @param serviceClass the serviceClass to set
+	 */
+	public void setServiceClass(Class<T> serviceClass) {
+		this.serviceClass = serviceClass;
+	}
+
+	/**
+	 * @return the serviceName
+	 */
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	/**
+	 * @param serviceName the serviceName to set
+	 */
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the serviceTicketFactory
+	 */
+	public ICasServiceTicketFactory getServiceTicketFactory() {
+		return serviceTicketFactory;
+	}
+
+	/**
+	 * @param serviceTicketFactory the serviceTicketFactory to set
+	 */
+	public void setServiceTicketFactory(
+			ICasServiceTicketFactory serviceTicketFactory) {
+		this.serviceTicketFactory = serviceTicketFactory;
+	}
+
 }
