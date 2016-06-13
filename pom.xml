@@ -68,6 +68,7 @@
 		<junit.VERSION>4.12</junit.VERSION>
 		<slf4j.VERSION>1.7.21</slf4j.VERSION>
 		<logback-classic.VERSION>1.1.7</logback-classic.VERSION>
+		<cas-client-core.VERSION>3.3.3</cas-client-core.VERSION>
 	</properties>
 	<scm>
 		<tag>development</tag>
@@ -255,17 +256,16 @@
 				<groupId>com.farmafene.cas</groupId>
 				<artifactId>cas-integration</artifactId>
 				<version>${project.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>*</groupId>
-						<artifactId>*</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4j.VERSION}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jasig.cas.client</groupId>
+				<artifactId>cas-client-core</artifactId>
+				<version>${cas-client-core.VERSION}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -322,6 +322,11 @@
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-ws-security</artifactId>
 				<version>${cxf.version}</version>
 			</dependency>
 			<dependency>

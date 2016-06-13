@@ -72,13 +72,13 @@ public class BasicRestClient {
 	private static final String TICKET = "ticket";
 	private static final String URL_ENCODED = "application/x-www-form-urlencoded";
 	private static final String ENCODING = "UTF-8";
-	private static final int READ_TIMEOUT_DEFAULT = 60000;
+	private static final int READ_TIMEOUT_DEFAULT = 500;
 	private static final int CONNECT_TIMEOUT_DEFAULT = 60000;
 	private static final String CONTENT_LENGTH = "Content-Length";
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String ACCEPT_ENCODING = "Accept-Encoding";
 
-	private String serverBase;
+	private String casServerUrlPrefix;
 	private String restServlet = RESP_PATH_DEFAULT;
 	private String encoding = ENCODING;
 	private int connectTimeoutMs = CONNECT_TIMEOUT_DEFAULT;
@@ -98,7 +98,7 @@ public class BasicRestClient {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getClass().getSimpleName());
 		sb.append("={");
-		sb.append("serverBase=").append(serverBase);
+		sb.append("casServerUrlPrefix=").append(casServerUrlPrefix);
 		sb.append(", restServlet=").append(restServlet);
 		sb.append("}");
 		return sb.toString();
@@ -106,19 +106,21 @@ public class BasicRestClient {
 
 	private HttpURLConnection getHttpConnection(String url, Method type,
 			int connectTimeoutMs, int readTimeoutMs, String charEncoding,
-			String contentType) throws ProtocolException, IOException,
-			MalformedURLException {
+			String contentType, boolean out) throws ProtocolException,
+			IOException, MalformedURLException {
 		URL uri = null;
 		HttpURLConnection con = null;
 		uri = new URL(url);
 		con = (HttpURLConnection) uri.openConnection();
 		con.setRequestMethod(type.toString());
-		con.setDoOutput(true);
-		con.setDoInput(true);
 		con.setConnectTimeout(connectTimeoutMs);
 		con.setReadTimeout(readTimeoutMs);
-		con.setRequestProperty(ACCEPT_ENCODING, charEncoding);
-		con.setRequestProperty(CONTENT_TYPE, contentType);
+		if (out) {
+			con.setDoInput(true);
+			con.setDoOutput(true);
+			con.setRequestProperty(ACCEPT_ENCODING, charEncoding);
+			con.setRequestProperty(CONTENT_TYPE, contentType);
+		}
 		return con;
 	}
 
@@ -224,8 +226,9 @@ public class BasicRestClient {
 		HttpURLConnection con = null;
 		String response = null;
 		try {
-			con = getHttpConnection(serverBase + restServlet, Method.POST,
-					connectTimeoutMs, readTimeoutMs, encoding, URL_ENCODED);
+			con = getHttpConnection(casServerUrlPrefix + restServlet,
+					Method.POST, connectTimeoutMs, readTimeoutMs, encoding,
+					URL_ENCODED);
 			Map<String, String> items = new HashMap<String, String>();
 			items.put(USERNAME, username);
 			items.put(PASSWORD, password);
@@ -275,7 +278,7 @@ public class BasicRestClient {
 		}
 		HttpURLConnection con = null;
 		try {
-			con = getHttpConnection(serverBase + restServlet + "/"
+			con = getHttpConnection(casServerUrlPrefix + restServlet + "/"
 					+ ticketGrantingTicket, Method.POST, connectTimeoutMs,
 					readTimeoutMs, encoding, URL_ENCODED);
 
@@ -333,9 +336,9 @@ public class BasicRestClient {
 			items.put(TARGET_SERVICE, service);
 			String urlParameters = urlEncode(items, encoding);
 			logger.debug("Los parametros de url son: '{}'", urlParameters);
-			con = getHttpConnection(serverBase + "/proxy?" + urlParameters,
-					Method.GET, connectTimeoutMs, readTimeoutMs, encoding,
-					URL_ENCODED);
+			con = getHttpConnection(casServerUrlPrefix + "/proxy?"
+					+ urlParameters, Method.GET, connectTimeoutMs,
+					readTimeoutMs, encoding, URL_ENCODED);
 
 			con.setUseCaches(false);
 			con.connect();
@@ -376,10 +379,9 @@ public class BasicRestClient {
 		HttpURLConnection con = null;
 		try {
 			String urlParameters = urlEncode(items, encoding);
-			con = getHttpConnection(
-					this.serverBase
-							+ (this.serverBase.endsWith("/") ? "" : "/")
-							+ "validate?" + urlParameters, Method.GET,
+			con = getHttpConnection(this.casServerUrlPrefix
+					+ (this.casServerUrlPrefix.endsWith("/") ? "" : "/")
+					+ "validate?" + urlParameters, Method.GET,
 					connectTimeoutMs, readTimeoutMs, encoding, CONTENT_TYPE);
 			con.setUseCaches(false);
 			con.connect();
@@ -422,10 +424,9 @@ public class BasicRestClient {
 		HttpURLConnection con = null;
 		try {
 			String urlParameters = urlEncode(items, encoding);
-			con = getHttpConnection(
-					this.serverBase
-							+ (this.serverBase.endsWith("/") ? "" : "/")
-							+ "proxyValidate?" + urlParameters, Method.GET,
+			con = getHttpConnection(this.casServerUrlPrefix
+					+ (this.casServerUrlPrefix.endsWith("/") ? "" : "/")
+					+ "proxyValidate?" + urlParameters, Method.GET,
 					connectTimeoutMs, readTimeoutMs, encoding, CONTENT_TYPE);
 			con.setUseCaches(false);
 			con.connect();
@@ -475,14 +476,13 @@ public class BasicRestClient {
 		try {
 			String urlParameters = urlEncode(items, encoding);
 			if (logger.isDebugEnabled()) {
-				logger.debug("Invocando: {}", this.serverBase
-						+ (this.serverBase.endsWith("/") ? "" : "/")
+				logger.debug("Invocando: {}", this.casServerUrlPrefix
+						+ (this.casServerUrlPrefix.endsWith("/") ? "" : "/")
 						+ "serviceValidate?" + urlParameters);
 			}
-			con = getHttpConnection(
-					this.serverBase
-							+ (this.serverBase.endsWith("/") ? "" : "/")
-							+ "serviceValidate?" + urlParameters, Method.GET,
+			con = getHttpConnection(this.casServerUrlPrefix
+					+ (this.casServerUrlPrefix.endsWith("/") ? "" : "/")
+					+ "serviceValidate?" + urlParameters, Method.GET,
 					connectTimeoutMs, readTimeoutMs, encoding, CONTENT_TYPE);
 			con.setUseCaches(false);
 			con.connect();
@@ -570,9 +570,9 @@ public class BasicRestClient {
 			throws IllegalStateException {
 		HttpURLConnection con = null;
 		try {
-			con = getHttpConnection(serverBase + restServlet + "/"
+			con = getHttpConnection(casServerUrlPrefix + restServlet + "/"
 					+ ticketGrantingTicket, Method.DELETE, connectTimeoutMs,
-					readTimeoutMs, encoding, CONTENT_TYPE);
+					readTimeoutMs, encoding, CONTENT_TYPE, false);
 			con.setUseCaches(false);
 			con.connect();
 			int responseCode = con.getResponseCode();
@@ -596,19 +596,12 @@ public class BasicRestClient {
 		}
 	}
 
-	/**
-	 * @return the serverBase
-	 */
-	public String getServerBase() {
-		return serverBase;
-	}
-
-	/**
-	 * @param serverBase
-	 *            the serverBase to set
-	 */
-	public void setServerBase(String serverBase) {
-		this.serverBase = serverBase;
+	private HttpURLConnection getHttpConnection(String string, Method delete,
+			int connectTimeoutMs2, int readTimeoutMs2, String encoding2,
+			String contentType) throws ProtocolException,
+			MalformedURLException, IOException {
+		return getHttpConnection(string, delete, connectTimeoutMs2,
+				readTimeoutMs2, encoding2, contentType, true);
 	}
 
 	/**
@@ -669,6 +662,21 @@ public class BasicRestClient {
 	 */
 	public void setReadTimeoutMs(int readTimeoutMs) {
 		this.readTimeoutMs = readTimeoutMs;
+	}
+
+	/**
+	 * @return the casServerUrlPrefix
+	 */
+	public String getCasServerUrlPrefix() {
+		return casServerUrlPrefix;
+	}
+
+	/**
+	 * @param casServerUrlPrefix
+	 *            the casServerUrlPrefix to set
+	 */
+	public void setCasServerUrlPrefix(String casServerUrlPrefix) {
+		this.casServerUrlPrefix = casServerUrlPrefix;
 	}
 
 }

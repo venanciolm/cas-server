@@ -23,6 +23,11 @@
  */
 package com.farmafene.cas.integration.sample.impl;
 
+import javax.xml.ws.WebServiceContext;
+
+import org.apache.cxf.jaxws.context.WebServiceContextImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.farmafene.cas.integration.sample.ISampleBasicService;
@@ -31,6 +36,10 @@ import com.farmafene.cas.integration.sample.SampleResponse;
 
 @Service("sampleBasicImpl")
 public class SampleBasicImpl implements ISampleBasicService {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(SampleBasicImpl.class);
+	private WebServiceContext wsctx = new WebServiceContextImpl();
 
 	public SampleBasicImpl() {
 
@@ -45,6 +54,17 @@ public class SampleBasicImpl implements ISampleBasicService {
 	public SampleResponse echo(SampleRequest request) {
 		SampleResponse response = new SampleResponse();
 		response.setMessage(request.getMessage());
+		logger.info("Context {}", wsctx);
+		if (wsctx != null) {
+			logger.info("Principal {}", wsctx.getClass());
+			logger.info("Principal {}", wsctx.getUserPrincipal());
+			if (null != wsctx.getUserPrincipal()) {
+				logger.info("Principal Name es  {}", wsctx.getUserPrincipal()
+						.getName());
+				logger.info("¿Está el role {}?, {} ", "ROLE_01",
+						wsctx.isUserInRole("ROLE_01"));
+			}
+		}
 		return response;
 	}
 

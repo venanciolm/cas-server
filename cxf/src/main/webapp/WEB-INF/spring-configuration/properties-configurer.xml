@@ -17,10 +17,8 @@
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
 	default-lazy-init="false">
 
-	<jaxws:endpoint id="sampleBasicWS" implementor="#sampleBasicEndPoint"
-		address="/sampleBasic">
-		<jaxws:properties>
-			<entry key="mtom-enabled" value="true" />
-		</jaxws:properties>
-	</jaxws:endpoint>
+	<util:properties id="configurationProperties"
+		location="/WEB-INF/server-conf.properties" />
+	<context:property-placeholder
+		properties-ref="configurationProperties" />
 </beans>

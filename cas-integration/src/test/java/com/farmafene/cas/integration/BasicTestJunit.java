@@ -49,7 +49,7 @@ public class BasicTestJunit {
 	@BeforeClass
 	public static void genenetateTickets() {
 		UTIL = new BasicRestClient();
-		UTIL.setServerBase(CAS_SERVER);
+		UTIL.setCasServerUrlPrefix(CAS_SERVER);
 		TGT = UTIL.getTicketGrantingTicket(USER, PWD);
 		Assert.assertNotNull("No se ha generado el ticket Granting ticket", TGT);
 	}

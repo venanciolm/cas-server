@@ -21,13 +21,39 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.farmafene.cas.integration;
+package com.farmafene.cas.integration.wss;
 
-import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
+import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.message.Message;
+import org.apache.cxf.phase.AbstractPhaseInterceptor;
+import org.apache.cxf.phase.Phase;
+import org.apache.cxf.security.SecurityContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class CasServiceValidator extends Cas20ServiceTicketValidator {
-	public CasServiceValidator(String casServerUrlPrefix) {
-		super(casServerUrlPrefix);
-		// TODO Auto-generated constructor stub
+public class LogoutInCasSecurityContext extends
+		AbstractPhaseInterceptor<Message> {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(LogoutInCasSecurityContext.class);
+
+	public LogoutInCasSecurityContext() {
+		super(Phase.POST_INVOKE);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.cxf.interceptor.Interceptor#handleMessage(org.apache.cxf.message.Message)
+	 */
+	@Override
+	public void handleMessage(Message message) throws Fault {
+		SecurityContext sc = message.get(SecurityContext.class);
+		logger.info("Validando si existe Logout {}", sc);
+		if (sc instanceof CasSecurityContext) {
+			logger.info("Procediendo al logout");
+			((CasSecurityContext) sc).logout();
+		}
+	}
+
 }
