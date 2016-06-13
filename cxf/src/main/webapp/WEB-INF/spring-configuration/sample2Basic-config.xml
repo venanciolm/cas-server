@@ -35,13 +35,17 @@
 			<ref bean="Logout" />
 			<ref bean="logInBound" />
 		</jaxws:inInterceptors>
+		<jaxws:inFaultInterceptors>
+			<ref bean="Logout" />
+		</jaxws:inFaultInterceptors>
 		<jaxws:outInterceptors>
 			<ref bean="logOutBound" />
 		</jaxws:outInterceptors>
 	</jaxws:endpoint>
 	<bean name="sample2BasicClient" lazy-init="true"
 		class="com.farmafene.cas.integration.spring.CasClientProxyFactoryBean">
-		<property name="serviceClass" value="com.farmafene.cas.integration.sample.ISampleBasicService" />
+		<property name="serviceClass"
+			value="com.farmafene.cas.integration.sample.ISampleBasicService" />
 		<property name="serviceName" value="${cxf.test.serviceUri}" />
 		<property name="address" value="${cxf.test.serviceBase}/sample2Basic?wsdl" />
 		<property name="serviceTicketFactory" ref="ICasServiceTicketFactory" />

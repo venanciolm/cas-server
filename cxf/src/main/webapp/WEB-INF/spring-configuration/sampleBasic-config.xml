@@ -32,9 +32,12 @@
 		</jaxws:features>
 		<jaxws:inInterceptors>
 			<ref bean="ChangeContext" />
-			<ref bean="Logout" />
 			<ref bean="logInBound" />
+			<ref bean="Logout" />
 		</jaxws:inInterceptors>
+		<jaxws:inFaultInterceptors>
+			<ref bean="Logout" />
+		</jaxws:inFaultInterceptors>
 		<jaxws:outInterceptors>
 			<ref bean="logOutBound" />
 		</jaxws:outInterceptors>

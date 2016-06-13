@@ -48,12 +48,7 @@ public class LogoutInCasSecurityContext extends
 	 */
 	@Override
 	public void handleMessage(Message message) throws Fault {
-		SecurityContext sc = message.get(SecurityContext.class);
-		logger.info("Validando si existe Logout {}", sc);
-		if (sc instanceof CasSecurityContext) {
-			logger.info("Procediendo al logout");
-			((CasSecurityContext) sc).logout();
-		}
+		handleFault(message);
 	}
 
 	/**
