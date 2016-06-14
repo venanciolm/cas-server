@@ -23,8 +23,6 @@
  */
 package com.farmafene.cas.integration.wss;
 
-import org.apache.cxf.message.Message;
-import org.apache.cxf.phase.PhaseInterceptorChain;
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.dom.handler.RequestData;
 import org.apache.wss4j.dom.message.token.UsernameToken;
@@ -117,13 +115,6 @@ public class Cas20UserNameTokenValidator implements InitializingBean, Validator 
 		principal.setCasServerUrlPrefix(casServerUrlPrefix);
 		principal.setTokenElement(credential.getUsernametoken().getElement());
 		credential.setPrincipal(principal);
-		Message msg = PhaseInterceptorChain.getCurrentMessage();
-		if (msg == null) {
-			throw new IllegalStateException("Current message is not available");
-		}
-		CasSecurityContext casCtx = new CasSecurityContext();
-		casCtx.setCasTokenPrincipal(principal);
-		msg.put(CasSecurityContext.class, casCtx);
 		return credential;
 	}
 

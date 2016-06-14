@@ -26,11 +26,13 @@ package com.farmafene.cas.integration.wss;
 import java.io.Serializable;
 import java.security.Principal;
 
+import org.apache.wss4j.common.principal.UsernameTokenPrincipal;
 import org.jasig.cas.client.validation.Assertion;
 import org.w3c.dom.Element;
 
 @SuppressWarnings("serial")
-public class CasTokenPrincipal implements Principal, Serializable {
+public class CasTokenPrincipal implements UsernameTokenPrincipal, Principal,
+		Serializable {
 
 	private Assertion assertion;
 	private Element tokenElement;
@@ -49,6 +51,56 @@ public class CasTokenPrincipal implements Principal, Serializable {
 	@Override
 	public String getName() {
 		return assertion.getPrincipal().getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.wss4j.common.principal.UsernameTokenPrincipal#isPasswordDigest()
+	 */
+	@Override
+	public boolean isPasswordDigest() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.wss4j.common.principal.UsernameTokenPrincipal#getPassword()
+	 */
+	@Override
+	public String getPassword() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.wss4j.common.principal.UsernameTokenPrincipal#getNonce()
+	 */
+	@Override
+	public byte[] getNonce() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.wss4j.common.principal.UsernameTokenPrincipal#getCreatedTime()
+	 */
+	@Override
+	public String getCreatedTime() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.apache.wss4j.common.principal.UsernameTokenPrincipal#getPasswordType()
+	 */
+	@Override
+	public String getPasswordType() {
+		return null;
 	}
 
 	public String getGrantingTicket() {
@@ -105,7 +157,8 @@ public class CasTokenPrincipal implements Principal, Serializable {
 	}
 
 	/**
-	 * @param casServerUrlPrefix the casServerUrlPrefix to set
+	 * @param casServerUrlPrefix
+	 *            the casServerUrlPrefix to set
 	 */
 	public void setCasServerUrlPrefix(String casServerUrlPrefix) {
 		this.casServerUrlPrefix = casServerUrlPrefix;
