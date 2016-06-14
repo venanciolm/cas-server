@@ -17,12 +17,12 @@
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
 	default-lazy-init="false">
 
-	<bean id="logInBound" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	<bean id="logInBoundImpl" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
 	<bean id="ChangeContext"
 		class="com.farmafene.cas.integration.wss.InjectCasSecurityContext" />
 	<bean id="Logout"
 		class="com.farmafene.cas.integration.wss.LogoutInCasSecurityContext" />
-	<bean id="logOutBound" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+	<bean id="logOutBoundImpl" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 	<bean name="uValidator"
 		class="com.farmafene.cas.integration.wss.Cas20UserNameTokenValidator">
 		<property name="service" value="${cxf.test.serviceUri}" />
