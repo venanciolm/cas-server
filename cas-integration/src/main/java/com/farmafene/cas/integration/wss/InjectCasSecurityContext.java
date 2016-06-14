@@ -28,11 +28,15 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.apache.cxf.security.SecurityContext;
-import org.apache.wss4j.common.ext.WSSecurityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.farmafene.cas.integration.basic.BasicRestClient;
 
 public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(InjectCasSecurityContext.class);
 
 	public InjectCasSecurityContext() {
 		super(Phase.PRE_INVOKE);
@@ -56,17 +60,19 @@ public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> 
 			message.put(SecurityContext.class, ctx);
 			return;
 		}
-		// else if (message.get(CasSecurityContext.class) != null) {
-		// CasSecurityContext csc = (CasSecurityContext) message
-		// .get(CasSecurityContext.class);
-		// BasicRestClient client = new BasicRestClient();
-		// client.setCasServerUrlPrefix(((CasTokenPrincipal) csc
-		// .getUserPrincipal()).getCasServerUrlPrefix());
-		// message.put(SecurityContext.class, csc);
-		// return;
-		// }
-		throw new Fault(new WSSecurityException(
-				WSSecurityException.ErrorCode.INVALID_SECURITY_TOKEN));
+		throw new Fault(new IllegalStateException(
+				"Not supported Token or without Secutity Token!"));
+	}
+
+	/**
+	 *
+	 * @see org.apache.cxf.phase.AbstractPhaseInterceptor#handleFault(org.apache.cxf.message.Message)
+	 */
+	@Override
+	public void handleFault(Message message) {
+		logger.error("=======================================================");
+		logger.error("= FAIL MESSAGE IN INJECT SECURITY CONTEXT =============");
+		logger.error("=======================================================");
 	}
 
 }

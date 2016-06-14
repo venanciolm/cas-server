@@ -30,6 +30,9 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.ws.soap.MTOM;
 
+import org.apache.cxf.annotations.Policies;
+import org.apache.cxf.annotations.Policy;
+import org.apache.cxf.annotations.Policy.Placement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -52,6 +55,9 @@ name = "sampleBasicBinding"
 )
 @MTOM
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@Policies(value = {
+		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
+		@Policy(uri = "policies/mtom-policy.xml") })
 public class Sample4BasicImpl implements ISampleBasicService {
 
 	@Autowired

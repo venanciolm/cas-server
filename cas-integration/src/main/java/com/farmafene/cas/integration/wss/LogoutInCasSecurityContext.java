@@ -48,7 +48,12 @@ public class LogoutInCasSecurityContext extends
 	 */
 	@Override
 	public void handleMessage(Message message) throws Fault {
-		handleFault(message);
+		SecurityContext sc = message.get(SecurityContext.class);
+		logger.info("Validando si existe Logout {}", sc);
+		if (sc instanceof CasSecurityContext) {
+			logger.info("Procediendo al logout");
+			((CasSecurityContext) sc).logout();
+		}
 	}
 
 	/**
@@ -58,12 +63,11 @@ public class LogoutInCasSecurityContext extends
 	 */
 	@Override
 	public void handleFault(Message message) {
-		SecurityContext sc = message.get(SecurityContext.class);
-		logger.info("Validando si existe Logout {}", sc);
-		if (sc instanceof CasSecurityContext) {
-			logger.info("Procediendo al logout");
-			((CasSecurityContext) sc).logout();
-		}
+		logger.error("===========================================");
+		logger.error("= FAIL MESSAGE IN INJECT SECURITY CONTEXT =");
+		logger.error("===========================================");
+		handleMessage(message);
+
 	}
 
 }
