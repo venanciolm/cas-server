@@ -12,6 +12,7 @@
 		<module>cas-integration</module>
 		<module>sample-war</module>
 		<module>cxf</module>
+		<module>sample-api</module>
 	</modules>
 	<properties>
 		<!-- -->
