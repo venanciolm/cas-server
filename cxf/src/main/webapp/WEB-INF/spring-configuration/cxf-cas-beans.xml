@@ -28,6 +28,7 @@
 		<property name="service" value="${cxf.test.serviceUri}" />
 		<property name="casServerUrlPrefix" value="${cas.server.url}" />
 	</bean>
+
 	<bean name="bValidator"
 		class="com.farmafene.cas.integration.wss.Cas20BinaryTokenValidator">
 		<property name="service" value="${cxf.test.serviceUri}" />

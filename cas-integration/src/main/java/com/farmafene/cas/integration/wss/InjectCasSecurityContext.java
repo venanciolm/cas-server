@@ -65,14 +65,21 @@ public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> 
 	}
 
 	/**
-	 *
+	 * {@inheritDoc}
+	 * 
 	 * @see org.apache.cxf.phase.AbstractPhaseInterceptor#handleFault(org.apache.cxf.message.Message)
 	 */
 	@Override
 	public void handleFault(Message message) {
-		logger.error("=======================================================");
-		logger.error("= FAIL MESSAGE IN INJECT SECURITY CONTEXT =============");
-		logger.error("=======================================================");
+		logger.error("===========================================");
+		logger.error("= FAIL MESSAGE IN *** FORCING LOGUT ***   =");
+		logger.error("===========================================");
+		SecurityContext sc = message.get(SecurityContext.class);
+		logger.info("Validando si existe Logout {}", sc);
+		if (sc instanceof CasSecurityContext) {
+			logger.info("Procediendo al logout");
+			((CasSecurityContext) sc).logout();
+		}
 	}
 
 }

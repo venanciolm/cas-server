@@ -1,4 +1,4 @@
-<wsp:Policy wsu:Id="AuthenticationSoapBindingTransportPolicy"
+<wsp:Policy wsu:Id="AceptedTokensPolicy"
 	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
 	targetNamespace="http://schemas.xmlsoap.org/ws/2004/09/policy"
 	xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"

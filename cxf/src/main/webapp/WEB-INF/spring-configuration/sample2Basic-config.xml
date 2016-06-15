@@ -35,9 +35,6 @@
 			<ref bean="Logout" />
 			<ref bean="logInBound" />
 		</jaxws:inInterceptors>
-		<jaxws:inFaultInterceptors>
-			<ref bean="Logout" />
-		</jaxws:inFaultInterceptors>
 		<jaxws:outInterceptors>
 			<ref bean="logOutBound" />
 		</jaxws:outInterceptors>

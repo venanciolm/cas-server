@@ -55,19 +55,4 @@ public class LogoutInCasSecurityContext extends
 			((CasSecurityContext) sc).logout();
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.apache.cxf.phase.AbstractPhaseInterceptor#handleFault(org.apache.cxf.message.Message)
-	 */
-	@Override
-	public void handleFault(Message message) {
-		logger.error("===========================================");
-		logger.error("= FAIL MESSAGE IN INJECT SECURITY CONTEXT =");
-		logger.error("===========================================");
-		handleMessage(message);
-
-	}
-
 }
