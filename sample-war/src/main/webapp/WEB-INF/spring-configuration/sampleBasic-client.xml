@@ -17,34 +17,13 @@
 		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"
 	default-lazy-init="false">
 
-	<jaxws:endpoint id="sample2BasicWS" implementor="#sample2BasicEndPoint"
-		address="/sample2Basic">
-		<jaxws:properties>
-			<!-- <entry key="mtom-enabled" value="true" /> -->
-			<entry key="ws-security.ut.validator" value-ref="uValidator" />
-			<entry key="ws-security.bst.validator" value-ref="bValidator" />
-		</jaxws:properties>
-		<jaxws:features>
-			<wp:policies>
-				<wsp:PolicyReference xmlns:wsp="http://www.w3.org/ns/ws-policy"
-					URI="classpath:/policies/bst-policy.xml" />
-			</wp:policies>
-		</jaxws:features>
-		<jaxws:inInterceptors>
-			<ref bean="ChangeContext" />
-			<ref bean="Logout" />
-			<ref bean="logInBound" />
-		</jaxws:inInterceptors>
-		<jaxws:outInterceptors>
-			<ref bean="logOutBound" />
-		</jaxws:outInterceptors>
-	</jaxws:endpoint>
-	<bean name="sample2BasicClient" lazy-init="true"
+	<bean name="sample1BasicClientImpl" lazy-init="true"
 		class="com.farmafene.cas.integration.spring.CasClientProxyFactoryBean">
 		<property name="serviceClass"
-			value="com.farmafene.cas.integration.sample.SampleBasicServiceWS" />
-		<property name="serviceName" value="${cxf.test.serviceUri}" />
-		<property name="address" value="${cxf.test.serviceBase}/sample2Basic" />
+			value="com.farmafene.cas.integration.sample.ISampleBasicService" />
+		<property name="serviceName" value="${cxf.test.serviceUri_cxf}" />
+		<property name="address" value="${cxf.test.serviceBase}/sample1Basic" />
 		<property name="serviceTicketFactory" ref="ICasServiceTicketFactory" />
 	</bean>
+
 </beans>

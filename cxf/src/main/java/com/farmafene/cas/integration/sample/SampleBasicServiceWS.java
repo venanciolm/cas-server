@@ -21,28 +21,14 @@
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.farmafene.cas.integration.sample.ws;
+package com.farmafene.cas.integration.sample;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.soap.MTOM;
 
-import org.apache.cxf.annotations.Policies;
-import org.apache.cxf.annotations.Policy;
-import org.apache.cxf.annotations.Policy.Placement;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import com.farmafene.cas.integration.sample.ISampleBasicService;
-import com.farmafene.cas.integration.sample.SampleBasicServiceWS;
-import com.farmafene.cas.integration.sample.SampleRequest;
-import com.farmafene.cas.integration.sample.SampleResponse;
-
-@Service("sample3BasicEndPoint")
 @WebService(
 //
 targetNamespace = "http://samples.farmafene.com/cxf/schema",
@@ -54,17 +40,8 @@ portName = "sampleBasicPort",
 name = "sampleBasicBinding"
 //
 )
-@MTOM
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-@Policies(value = {
-		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
-		@Policy(uri = "policies/mtom-policy.xml") })
-public class Sample3BasicImpl implements SampleBasicServiceWS {
-
-	@Autowired
-	@Qualifier("sample3Basic")
-	private ISampleBasicService service;
-
+public interface SampleBasicServiceWS extends ISampleBasicService {
 	@WebMethod
 	@WebResult(
 	//
@@ -84,8 +61,5 @@ public class Sample3BasicImpl implements SampleBasicServiceWS {
 			//
 			targetNamespace = "http://samples.farmafene.com/cxf/schema"
 			//
-			) SampleRequest request) {
-
-		return this.service.echo(request);
-	}
+			) SampleRequest request);
 }

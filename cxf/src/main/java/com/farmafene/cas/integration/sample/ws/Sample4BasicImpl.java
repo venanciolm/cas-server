@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.farmafene.cas.integration.sample.ISampleBasicService;
+import com.farmafene.cas.integration.sample.SampleBasicServiceWS;
 import com.farmafene.cas.integration.sample.SampleRequest;
 import com.farmafene.cas.integration.sample.SampleResponse;
 
@@ -58,7 +59,7 @@ name = "sampleBasicBinding"
 @Policies(value = {
 		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
 		@Policy(uri = "policies/mtom-policy.xml") })
-public class Sample4BasicImpl implements ISampleBasicService {
+public class Sample4BasicImpl implements SampleBasicServiceWS {
 
 	@Autowired
 	@Qualifier("sample4Basic")

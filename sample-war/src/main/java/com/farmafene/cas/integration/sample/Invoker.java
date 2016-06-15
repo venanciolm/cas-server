@@ -23,6 +23,12 @@
  */
 package com.farmafene.cas.integration.sample;
 
-public interface ISampleBasicService {
-	public SampleResponse echo(SampleRequest request);
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+public class Invoker {
+	@Autowired
+	@Qualifier("sample2BasicClient")
+	private Object item;
+
 }
