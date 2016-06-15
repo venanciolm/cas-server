@@ -46,7 +46,7 @@ public class CasUserDetailsService extends
 	protected UserDetails loadUserDetails(Assertion assertion) {
 		CasUserDetails user = new CasUserDetails();
 		user.setAttributePrincipal(assertion.getPrincipal());
-		user.setAccountNonExpired(true);
+		user.setEnabled(true);
 		user.setAccountNonLocked(true);
 		user.setUsername(user.getAttributePrincipal().getName());
 		user.setCustomAttribute((String) user.getAttributePrincipal()
