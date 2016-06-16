@@ -24,12 +24,17 @@
 package com.farmafene.cas.integration.spring;
 
 import org.apache.wss4j.common.ext.WSSecurityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.farmafene.cas.integration.clients.ICasServiceTicketFactory;
 
 public class SpringSecutityCasServiceTicketFactory implements
 		ICasServiceTicketFactory {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(SpringSecutityCasServiceTicketFactory.class);
 
 	/**
 	 * {@inheritDoc}
@@ -47,11 +52,13 @@ public class SpringSecutityCasServiceTicketFactory implements
 				&& null != SecurityContextHolder.getContext()
 						.getAuthentication()
 				&& SecurityContextHolder.getContext().getAuthentication()
-						.getDetails() instanceof CasUserDetails) {
+						.getPrincipal() instanceof CasUserDetails) {
 			CasUserDetails details = (CasUserDetails) SecurityContextHolder
-					.getContext().getAuthentication().getDetails();
+					.getContext().getAuthentication().getPrincipal();
 			proxyTicket = details.getAttributePrincipal().getProxyTicketFor(
 					serviceName);
+		} else {
+			logger.error("No se ha podido localizar el principal");
 		}
 		return proxyTicket;
 	}

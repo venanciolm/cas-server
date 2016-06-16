@@ -26,10 +26,14 @@ package com.farmafene.cas.integration.sample.impl;
 import javax.xml.ws.WebServiceContext;
 
 import org.apache.cxf.jaxws.context.WebServiceContextImpl;
+import org.apache.wss4j.common.ext.WSSecurityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.farmafene.cas.integration.clients.ICasServiceTicketFactory;
 import com.farmafene.cas.integration.sample.ISampleBasicService;
 import com.farmafene.cas.integration.sample.SampleRequest;
 import com.farmafene.cas.integration.sample.SampleResponse;
@@ -40,6 +44,12 @@ public class Sample4BasicImpl implements ISampleBasicService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Sample4BasicImpl.class);
 	private WebServiceContext wsctx = new WebServiceContextImpl();
+
+	@Autowired
+	private ICasServiceTicketFactory factory;
+
+	@Value("${cxf.test.serviceUri}")
+	private String serviceName;
 
 	public Sample4BasicImpl() {
 
@@ -64,6 +74,12 @@ public class Sample4BasicImpl implements ISampleBasicService {
 				logger.info("¿Está el role {}?, {} ", "ROLE_01",
 						wsctx.isUserInRole("ROLE_01"));
 			}
+		}
+		response.setPrincipalName(wsctx.getUserPrincipal().getName());
+		try {
+			response.setProxyTicket(factory.getServiceToken(serviceName));
+		} catch (WSSecurityException e) {
+			logger.error("Error en la obtención del ticket", e);
 		}
 		return response;
 	}

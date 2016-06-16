@@ -23,12 +23,33 @@
  */
 package com.farmafene.cas.integration.sample;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.UUID;
+
+import com.farmafene.cas.integration.spring.SpringBeanFactoryLocator;
 
 public class Invoker {
-	@Autowired
-	@Qualifier("sample2BasicClient")
-	private Object item;
+
+	public String uuidReq;
+	public String uuidRes;
+	public String name;
+	public String proxyTicket;
+
+	public Invoker() {
+
+	}
+
+	public void callService() {
+
+		SampleBasicServiceWS service = SpringBeanFactoryLocator
+				.getSpringBeanFactory().getBean("sample1BasicClientImpl",
+						SampleBasicServiceWS.class);
+		uuidReq = UUID.randomUUID().toString();
+		SampleRequest req = new SampleRequest();
+		req.setMessage(uuidReq);
+		SampleResponse res = service.echo(req);
+		uuidRes = res.getMessage();
+		name = res.getPrincipalName();
+		proxyTicket = res.getProxyTicket();
+	}
 
 }

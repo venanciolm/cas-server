@@ -30,11 +30,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "message" })
+@XmlType(name = "", propOrder = { "message", "principalName", "proxyTicket" })
 @XmlRootElement(name = "SampleResponse")
 public class SampleResponse {
 	@XmlElement(required = true)
 	protected String message;
+	@XmlElement(required = true)
+	protected String principalName;
+	@XmlElement(required = true)
+	protected String proxyTicket;
 
 	public String getMessage() {
 		return message;
@@ -42,5 +46,33 @@ public class SampleResponse {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	/**
+	 * @return the principalName
+	 */
+	public String getPrincipalName() {
+		return principalName;
+	}
+
+	/**
+	 * @param principalName the principalName to set
+	 */
+	public void setPrincipalName(String principalName) {
+		this.principalName = principalName;
+	}
+
+	/**
+	 * @return the proxyTicket
+	 */
+	public String getProxyTicket() {
+		return proxyTicket;
+	}
+
+	/**
+	 * @param proxyTicket the proxyTicket to set
+	 */
+	public void setProxyTicket(String proxyTicket) {
+		this.proxyTicket = proxyTicket;
 	}
 }

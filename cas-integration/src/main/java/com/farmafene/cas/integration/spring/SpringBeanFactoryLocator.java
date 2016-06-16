@@ -23,12 +23,17 @@
  */
 package com.farmafene.cas.integration.spring;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class SpringBeanFactoryLocator implements InitializingBean {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(SpringBeanFactoryLocator.class);
 
 	@Autowired(required = false)
 	private ConfigurableApplicationContext context;
@@ -42,6 +47,7 @@ public class SpringBeanFactoryLocator implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		CTX = this.context;
+		logger.info("El valor del Bean es: {}", this.context);
 	}
 
 	public static final BeanFactory getSpringBeanFactory()

@@ -32,8 +32,9 @@
 	default-lazy-init="false">
 
 
-	<bean id="ICasServiceTicketFactoryImpl"
+	<bean id="CasServiceTicketFactoryImpl"
 		class="com.farmafene.cas.integration.spring.SpringSecutityCasServiceTicketFactory">
 	</bean>
+	<bean class="com.farmafene.cas.integration.spring.SpringBeanFactoryLocator" />
 </beans>
 	
