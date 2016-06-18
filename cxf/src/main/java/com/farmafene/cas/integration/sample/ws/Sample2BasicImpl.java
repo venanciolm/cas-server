@@ -23,16 +23,8 @@
  */
 package com.farmafene.cas.integration.sample.ws;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.soap.MTOM;
 
-import org.apache.cxf.annotations.Policies;
-import org.apache.cxf.annotations.Policy;
-import org.apache.cxf.annotations.Policy.Placement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -51,40 +43,14 @@ serviceName = "sampleBasic",
 //
 portName = "sampleBasicPort",
 //
-name = "sampleBasicBinding"
-//
-)
-@MTOM
-@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-@Policies(value = {
-		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
-		@Policy(uri = "policies/mtom-policy.xml") })
+endpointInterface = "com.farmafene.cas.integration.sample.SampleBasicServiceWS")
 public class Sample2BasicImpl implements SampleBasicServiceWS {
 
 	@Autowired
 	@Qualifier("sample2Basic")
 	private ISampleBasicService service;
 
-	@WebMethod
-	@WebResult(
-	//
-	name = "SampleResponse",
-	//
-	partName = "SampleResponse",
-	//
-	targetNamespace = "http://samples.farmafene.com/cxf/schema"
-	//
-	)
-	public SampleResponse echo(//
-			@WebParam(
-			//
-			name = "SampleRequest",
-			//
-			partName = "SampleRequest",
-			//
-			targetNamespace = "http://samples.farmafene.com/cxf/schema"
-			//
-			) SampleRequest request) {
+	public SampleResponse echo(SampleRequest request) {
 		return this.service.echo(request);
 	}
 }

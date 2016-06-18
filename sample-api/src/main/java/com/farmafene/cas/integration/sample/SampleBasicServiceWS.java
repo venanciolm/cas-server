@@ -28,19 +28,18 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.xml.ws.soap.MTOM;
 
-@WebService(
-//
-targetNamespace = "http://samples.farmafene.com/cxf/schema",
-//
-serviceName = "sampleBasic",
-//
-portName = "sampleBasicPort",
-//
-name = "sampleBasicBinding"
-//
-)
+import org.apache.cxf.annotations.Policies;
+import org.apache.cxf.annotations.Policy;
+import org.apache.cxf.annotations.Policy.Placement;
+
+@WebService	
+@MTOM
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@Policies(value = {
+		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
+		@Policy(uri = "policies/mtom-policy.xml") })
 public interface SampleBasicServiceWS extends ISampleBasicService {
 	@WebMethod
 	@WebResult(
