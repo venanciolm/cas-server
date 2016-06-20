@@ -34,11 +34,21 @@ import org.apache.cxf.annotations.Policies;
 import org.apache.cxf.annotations.Policy;
 import org.apache.cxf.annotations.Policy.Placement;
 
-@WebService	
+@WebService(
+//
+targetNamespace = "http://samples.farmafene.com/cxf/schema",
+//
+serviceName = "sampleBasic",
+//
+portName = "sampleBasicPort",
+//
+name = "sampleBasicBinding"
+//
+)
 @MTOM
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @Policies(value = {
-		@Policy(placement = Placement.PORT_TYPE, uri = "policies/bst-policy.xml"),
+		@Policy(uri = "policies/bst-policy.xml", placement = Placement.BINDING),
 		@Policy(uri = "policies/mtom-policy.xml") })
 public interface SampleBasicServiceWS extends ISampleBasicService {
 	@WebMethod

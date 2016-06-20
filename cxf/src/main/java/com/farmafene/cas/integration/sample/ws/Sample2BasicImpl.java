@@ -37,13 +37,11 @@ import com.farmafene.cas.integration.sample.SampleResponse;
 @Service("sample2BasicEndPoint")
 @WebService(
 //
-targetNamespace = "http://samples.farmafene.com/cxf/schema",
-//
 serviceName = "sampleBasic",
 //
-portName = "sampleBasicPort",
+portName = "sampleBasicPort"
 //
-endpointInterface = "com.farmafene.cas.integration.sample.SampleBasicServiceWS")
+)
 public class Sample2BasicImpl implements SampleBasicServiceWS {
 
 	@Autowired

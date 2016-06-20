@@ -31,15 +31,18 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
+import com.farmafene.cas.integration.clients.CasKerberosClientImpl;
 import com.farmafene.cas.integration.clients.CxfCasTokenInjectInterceptor;
 import com.farmafene.cas.integration.clients.ICasServiceTicketFactory;
 
 public class CasClientProxyFactoryBean<T> implements InitializingBean,
 		FactoryBean<T> {
+	private static final String WS_SECURITY_KERBEROS_CLIENT = "ws-security.kerberos.client";
 	private Class<T> serviceClass;
 	private String serviceName;
 	private String address;
 	private ICasServiceTicketFactory serviceTicketFactory;
+	private boolean forceCas = true;
 
 	/**
 	 * {@inheritDoc}
@@ -65,13 +68,21 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 		ClientProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 		factory.setServiceClass(serviceClass);
 		factory.setAddress(address);
-		CxfCasTokenInjectInterceptor filter = new CxfCasTokenInjectInterceptor();
-		filter.setServiceName(serviceName);
-		filter.setServiceTicketFactory(serviceTicketFactory);
 		@SuppressWarnings("unchecked")
 		T service = (T) factory.create();
 		Client proxy = ClientProxy.getClient(service);
-		proxy.getOutInterceptors().add(filter);
+		if (isForceCas()) {
+			CasKerberosClientImpl krClient = new CasKerberosClientImpl();
+			krClient.setServiceName(serviceName);
+			krClient.setServiceTicketFactory(serviceTicketFactory);
+			proxy.getRequestContext()
+					.put(WS_SECURITY_KERBEROS_CLIENT, krClient);
+		} else {
+			CxfCasTokenInjectInterceptor filter = new CxfCasTokenInjectInterceptor();
+			filter.setServiceName(serviceName);
+			filter.setServiceTicketFactory(serviceTicketFactory);
+			proxy.getOutInterceptors().add(filter);
+		}
 		return service;
 	}
 
@@ -103,7 +114,8 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 	}
 
 	/**
-	 * @param serviceClass the serviceClass to set
+	 * @param serviceClass
+	 *            the serviceClass to set
 	 */
 	public void setServiceClass(Class<T> serviceClass) {
 		this.serviceClass = serviceClass;
@@ -117,7 +129,8 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 	}
 
 	/**
-	 * @param serviceName the serviceName to set
+	 * @param serviceName
+	 *            the serviceName to set
 	 */
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
@@ -131,7 +144,8 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -145,11 +159,26 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 	}
 
 	/**
-	 * @param serviceTicketFactory the serviceTicketFactory to set
+	 * @param serviceTicketFactory
+	 *            the serviceTicketFactory to set
 	 */
 	public void setServiceTicketFactory(
 			ICasServiceTicketFactory serviceTicketFactory) {
 		this.serviceTicketFactory = serviceTicketFactory;
 	}
 
+	/**
+	 * @return the forceCas
+	 */
+	public boolean isForceCas() {
+		return forceCas;
+	}
+
+	/**
+	 * @param forceCas
+	 *            the forceCas to set
+	 */
+	public void setForceCas(boolean forceCas) {
+		this.forceCas = forceCas;
+	}
 }

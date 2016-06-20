@@ -1,4 +1,4 @@
-<wsp:Policy wsu:Id="FarmafeneAceptedTokensPolicy"
+<wsp:Policy wsu:Id="FarmafeneCasToken"
 	xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
 	targetNamespace="http://schemas.xmlsoap.org/ws/2004/09/policy"
 	xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
@@ -9,15 +9,6 @@
 				sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
 				<wsp:Policy />
 			</sp:KerberosToken>
-		</wsp:Policy>
-		<wsp:Policy>
-			<sp:UsernameToken
-				sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
-				<wsp:Policy>
-					<sp:WssUsernameToken11 />
-					<sp:NoPassword />
-				</wsp:Policy>
-			</sp:UsernameToken>
 		</wsp:Policy>
 	</wsp:ExactlyOne>
 </wsp:Policy>
