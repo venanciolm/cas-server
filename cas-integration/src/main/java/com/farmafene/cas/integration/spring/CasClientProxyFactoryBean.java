@@ -42,7 +42,7 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 	private String serviceName;
 	private String address;
 	private ICasServiceTicketFactory serviceTicketFactory;
-	private boolean forceCas = true;
+	private boolean forceCas = false;
 
 	/**
 	 * {@inheritDoc}
@@ -71,7 +71,7 @@ public class CasClientProxyFactoryBean<T> implements InitializingBean,
 		@SuppressWarnings("unchecked")
 		T service = (T) factory.create();
 		Client proxy = ClientProxy.getClient(service);
-		if (isForceCas()) {
+		if (!isForceCas()) {
 			CasKerberosClientImpl krClient = new CasKerberosClientImpl();
 			krClient.setServiceName(serviceName);
 			krClient.setServiceTicketFactory(serviceTicketFactory);
