@@ -11,6 +11,7 @@
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+	<alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver" />
 	<alias name="attributeRepositoryBasic" alias="attributeRepository" />
 	<bean id="attributeRepositoryBasic"
 		class="com.farmafene.cas.integration.basic.BasicPersonAttributeDao">

@@ -22,7 +22,6 @@
 		<ref bean="successfulHandlerMetaDataPopulator" />
 		<ref bean="rememberMeAuthenticationMetaDataPopulator" />
 	</util:list>
-	<alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver" />
 
 	<alias name="serviceThemeResolver" alias="themeResolver" />
 

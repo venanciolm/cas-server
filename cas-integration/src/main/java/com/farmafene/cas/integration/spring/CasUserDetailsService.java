@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.jasig.cas.client.validation.Assertion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +38,8 @@ public class CasUserDetailsService extends
 
 	private static final String MEMBER_OF = "memberOf";
 	private static final String CUSTOM_ATTRIBUTE = "customAttribute";
+	private static final Logger logger = LoggerFactory
+			.getLogger(CasUserDetails.class);
 
 	/**
 	 * {@inheritDoc}
@@ -52,15 +56,19 @@ public class CasUserDetailsService extends
 		user.setCustomAttribute((String) user.getAttributePrincipal()
 				.getAttributes().get(CUSTOM_ATTRIBUTE));
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		user.setAuthorities(authorities);
-		String roles = (String) user.getAttributePrincipal().getAttributes()
-				.get(MEMBER_OF);
-		if (roles != null) {
-			String[] r = roles.split(",");
-			for (String i : r) {
-				authorities.add(new SimpleGrantedAuthority(i));
+		Object a = user.getAttributePrincipal().getAttributes().get(MEMBER_OF);
+		logger.info("Buscando los roles");
+		if (a != null && a.getClass().isArray()) {
+			for (Object i : ((Object[]) a)) {
+				authorities.add(new SimpleGrantedAuthority(i.toString()));
+			}
+		} else if (a != null) {
+			for (String i : ((String) a).split(",")) {
+				authorities.add(new SimpleGrantedAuthority(i.trim()));
 			}
 		}
+		logger.info("Las authorities son {}", authorities);
+		user.setAuthorities(authorities);
 		return user;
 	}
 }

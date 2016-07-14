@@ -27,7 +27,7 @@ import org.jasig.cas.authentication.HandlerResult;
 
 public class ThreadContextPrincipalInChain implements IPrincipalInChain {
 
-	private ThreadLocal<HandlerResult> repo = new ThreadLocal<HandlerResult>();
+	private static ThreadLocal<HandlerResult> repo = new ThreadLocal<HandlerResult>();
 
 	/**
 	 * {@inheritDoc}
