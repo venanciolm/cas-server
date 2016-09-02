@@ -7,7 +7,7 @@
 	<logger name="com.farmafene" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
-	<logger name="org.jasig.cas.client.validation.Cas20ServiceTicketValidator" level="DEBUG" additivity="false">
+	<logger name="org.jasig.cas.client.validation" level="DEBUG" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	<root level="INFO" additivity="false">

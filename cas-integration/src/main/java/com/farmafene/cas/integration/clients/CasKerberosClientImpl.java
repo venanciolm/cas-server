@@ -40,6 +40,11 @@ public class CasKerberosClientImpl extends KerberosClient {
 	private static final Logger logger = LoggerFactory
 			.getLogger(CasKerberosClientImpl.class);
 
+
+	public CasKerberosClientImpl() {
+
+	}
+
 	public ICasServiceTicketFactory getServiceTicketFactory() {
 		return serviceTicketFactory;
 	}
@@ -48,11 +53,6 @@ public class CasKerberosClientImpl extends KerberosClient {
 			ICasServiceTicketFactory serviceTicketFactory) {
 		this.serviceTicketFactory = serviceTicketFactory;
 	}
-
-	public CasKerberosClientImpl() {
-
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * 

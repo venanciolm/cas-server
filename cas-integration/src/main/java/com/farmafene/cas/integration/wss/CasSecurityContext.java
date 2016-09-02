@@ -25,6 +25,7 @@ package com.farmafene.cas.integration.wss;
 
 import java.security.Principal;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.apache.cxf.security.SecurityContext;
 import org.slf4j.Logger;
@@ -65,12 +66,21 @@ public class CasSecurityContext implements SecurityContext {
 	}
 
 	private void loadRoles(LinkedHashSet<String> rolesToLoad) {
-		String roles = (String) principal.getAssertion().getPrincipal()
+		Object a = principal.getAssertion().getPrincipal()
 				.getAttributes().get("memberOf");
-		if (roles != null) {
-			String[] r = roles.split(",");
-			for (String i : r) {
-				rolesToLoad.add(i);
+		if (a != null && a.getClass().isArray()) {
+			for (Object i : ((Object[]) a)) {
+				rolesToLoad.add(i.toString());
+			}
+		} else if (a != null && a instanceof String) {
+			for (String i : ((String) a).split(",")) {
+				rolesToLoad.add(i.trim());
+			}
+		} else if (a != null && a instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<String> a2 = (List<String>)a;
+			for (String ao:a2) {
+				rolesToLoad.add(ao.trim());
 			}
 		}
 	}

@@ -59,8 +59,11 @@
 			logout-success-url="/logout.html" />
 	</http>
 	<!-- This filter handles a Single Logout Request from the CAS Server -->
-	<beans:bean id="singleLogoutFilter"
-		class="org.jasig.cas.client.session.SingleSignOutFilter" />
+	<beans:bean id="singleLogoutFilter" scope="singleton"
+		class="org.jasig.cas.client.session.SingleSignOutFilter">
+		<beans:property name="ignoreInitConfiguration" value="true" />
+		<beans:property name="casServerUrlPrefix" value="${cas.server.url}" />
+	</beans:bean>
 	<!-- This filter redirects to the CAS Server to signal Single Logout should 
 		be performed -->
 	<beans:bean id="requestSingleLogoutFilter"
@@ -80,8 +83,7 @@
 	</beans:bean>
 	<beans:bean id="casEntryPoint"
 		class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
-		<beans:property name="loginUrl"
-			value="${cas.server.url}/login" />
+		<beans:property name="loginUrl" value="${cas.server.url}/login" />
 		<beans:property name="serviceProperties" ref="serviceProperties" />
 	</beans:bean>
 	<!-- Handles a Single Logout Request from the CAS Server must be in custom-filter 
@@ -106,16 +108,14 @@
 			/> -->
 	</beans:bean>
 	<beans:bean id="ticketValidator"
-		class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
+		class="org.jasig.cas.client.validation.Cas30ServiceTicketValidator">
 		<beans:constructor-arg value="${cas.server.url}" />
-		<beans:property name="proxyCallbackUrl"
-			value="${cas.server.proxyCallbackUrl}" />
+		<beans:property name="proxyCallbackUrl" value="${cas.server.proxyCallbackUrl}" />
 		<beans:property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage" />
 	</beans:bean>
 	<beans:bean id="proxyGrantingTicketStorage"
 		class="com.farmafene.cas.integration.wss.ProxyGrantingTicketStorageForTicketServer">
-		<beans:property name="retrieveUrl"
-			value="${cas.server.proxyRetrieveUrl}" />
+		<beans:property name="retrieveUrl" value="${cas.server.proxyRetrieveUrl}" />
 	</beans:bean>
 	<beans:bean id="authenticationUserDetailsService"
 		class="com.farmafene.cas.integration.spring.CasUserDetailsService" />

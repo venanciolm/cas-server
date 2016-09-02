@@ -24,13 +24,13 @@
 		class="com.farmafene.cas.integration.wss.LogoutInCasSecurityContext" />
 	<bean id="logOutBoundImpl" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
 	<bean name="uValidator"
-		class="com.farmafene.cas.integration.wss.Cas20UserNameTokenValidator">
+		class="com.farmafene.cas.integration.wss.Cas30UserNameTokenValidator">
 		<property name="service" value="${cxf.test.serviceUri}" />
 		<property name="casServerUrlPrefix" value="${cas.server.url}" />
 	</bean>
 
 	<bean name="bValidator"
-		class="com.farmafene.cas.integration.wss.Cas20BinaryTokenValidator">
+		class="com.farmafene.cas.integration.wss.Cas30BinaryTokenValidator">
 		<property name="service" value="${cxf.test.serviceUri}" />
 		<property name="casServerUrlPrefix" value="${cas.server.url}" />
 		<property name="proxyCallbackUrl" value="${cas.server.proxyUrl}" />

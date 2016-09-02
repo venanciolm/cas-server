@@ -25,6 +25,7 @@ package com.farmafene.cas.integration.spring;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.jasig.cas.client.validation.Assertion;
 import org.slf4j.Logger;
@@ -62,9 +63,15 @@ public class CasUserDetailsService extends
 			for (Object i : ((Object[]) a)) {
 				authorities.add(new SimpleGrantedAuthority(i.toString()));
 			}
-		} else if (a != null) {
+		} else if (a != null && a instanceof String) {
 			for (String i : ((String) a).split(",")) {
 				authorities.add(new SimpleGrantedAuthority(i.trim()));
+			}
+		} else if (a != null && a instanceof List) {
+			@SuppressWarnings("unchecked")
+			List<String> a2 = (List<String>)a;
+			for (String ao:a2) {
+				authorities.add(new SimpleGrantedAuthority(ao.trim()));
 			}
 		}
 		logger.info("Las authorities son {}", authorities);

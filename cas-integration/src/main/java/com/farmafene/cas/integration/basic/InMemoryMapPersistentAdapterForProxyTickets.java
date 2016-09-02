@@ -23,17 +23,35 @@
  */
 package com.farmafene.cas.integration.basic;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import com.farmafene.cas.integration.IPersistentAdapterForProxyTickets;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 public class InMemoryMapPersistentAdapterForProxyTickets implements
 		IPersistentAdapterForProxyTickets {
+	private static final long MAX_CACHE = 500;
+	private static final long MAX_SECONDS = 5;
+	private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
 
-	private Map<String, String> pgtMap = new ConcurrentHashMap<String, String>();
+	private Cache<String, String> pgtMap = CacheBuilder.newBuilder()
+			.maximumSize(getCacheSize())
+			.expireAfterWrite(getTimeValue(), getTimeUnit()).build();
 
 	public InMemoryMapPersistentAdapterForProxyTickets() {
+	}
+
+	private TimeUnit getTimeUnit() {
+		return TIME_UNIT;
+	}
+
+	private long getTimeValue() {
+		return MAX_SECONDS;
+	}
+
+	private long getCacheSize() {
+		return MAX_CACHE;
 	}
 
 	/**
@@ -70,7 +88,7 @@ public class InMemoryMapPersistentAdapterForProxyTickets implements
 	 */
 	@Override
 	public String get(String pgtIou) {
-		return pgtMap.get(pgtIou);
+		return pgtMap.getIfPresent(pgtIou);
 	}
 
 	/**
@@ -80,8 +98,11 @@ public class InMemoryMapPersistentAdapterForProxyTickets implements
 	 */
 	@Override
 	public String remove(String pgtIou) {
-		return pgtMap.remove(pgtIou);
-
+		String pgt = pgtMap.getIfPresent(pgtIou);
+		if (null != pgt) {
+			pgtMap.invalidate(pgtIou);
+		}
+		return pgt;
 	}
 
 }

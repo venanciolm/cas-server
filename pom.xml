@@ -69,7 +69,7 @@
 		<junit.VERSION>4.12</junit.VERSION>
 		<slf4j.VERSION>1.7.21</slf4j.VERSION>
 		<logback-classic.VERSION>1.1.7</logback-classic.VERSION>
-		<cas-client-core.VERSION>3.3.3</cas-client-core.VERSION>
+		<cas-client-core.VERSION>3.4.1</cas-client-core.VERSION>
 	</properties>
 	<scm>
 		<tag>development</tag>
