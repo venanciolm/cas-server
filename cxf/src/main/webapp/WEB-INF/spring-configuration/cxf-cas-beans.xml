@@ -19,7 +19,7 @@
 
 	<bean id="logInBoundImpl" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
 	<bean id="ChangeContext"
-		class="com.farmafene.cas.integration.wss.InjectCasSecurityContext" />
+		class="com.farmafene.cas.integration.wss.LogoutOnError" />
 	<bean id="Logout"
 		class="com.farmafene.cas.integration.wss.LogoutInCasSecurityContext" />
 	<bean id="logOutBoundImpl" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />

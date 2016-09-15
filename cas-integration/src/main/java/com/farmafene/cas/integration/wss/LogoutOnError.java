@@ -31,13 +31,12 @@ import org.apache.cxf.security.SecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.farmafene.cas.integration.basic.BasicRestClient;
+public class LogoutOnError extends AbstractPhaseInterceptor<Message> {
 
-public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> {
+	private static final Logger logger = LoggerFactory
+			.getLogger(LogoutOnError.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(InjectCasSecurityContext.class);
-
-	public InjectCasSecurityContext() {
+	public LogoutOnError() {
 		super(Phase.PRE_INVOKE);
 	}
 
@@ -48,17 +47,6 @@ public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> 
 	 */
 	@Override
 	public void handleMessage(Message message) throws Fault {
-		SecurityContext sc = message.get(SecurityContext.class);
-		if (sc != null && sc.getUserPrincipal() != null && (sc.getUserPrincipal() instanceof CasTokenPrincipal)) {
-			CasTokenPrincipal ctp = (CasTokenPrincipal) sc.getUserPrincipal();
-			CasSecurityContext ctx = new CasSecurityContext();
-			ctx.setCasTokenPrincipal(ctp);
-			BasicRestClient client = new BasicRestClient();
-			client.setCasServerUrlPrefix(ctp.getCasServerUrlPrefix());
-			message.put(SecurityContext.class, ctx);
-			return;
-		}
-		throw new Fault(new IllegalStateException("Not supported Token or without Secutity Token!"));
 	}
 
 	/**
@@ -78,4 +66,5 @@ public class InjectCasSecurityContext extends AbstractPhaseInterceptor<Message> 
 			((CasSecurityContext) sc).logout();
 		}
 	}
+
 }
