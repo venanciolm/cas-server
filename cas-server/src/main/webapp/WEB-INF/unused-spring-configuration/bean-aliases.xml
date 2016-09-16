@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<description>
+		Configuration file for the Inspektr package which handles
+		auditing for Java applications. If enabled this
+		should be modified to
+		log audit and statistics information the same way your local
+		applications do. The default is currently to log to the console which
+		is good for debugging/testing purposes.
+	</description>
+	<bean name="centralAuthenticationService" class="org.jasig.cas.CentralAuthenticationServiceImpl" />
+	<bean name="servicesManager" class="org.jasig.cas.services.DefaultServicesManagerImpl" />
+	<bean name="inMemoryServiceRegistryDao" class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl" />
+	<bean name="ticketResourceResolver"
+		class="org.jasig.cas.audit.spi.TicketAsFirstParameterResourceResolver" />
+	<bean name="auditablePrincipalResolver"
+		class="org.jasig.cas.audit.spi.TicketOrCredentialPrincipalResolver" />
+	<bean name="defaultTicketRegistry" class="org.jasig.cas.ticket.registry.DefaultTicketRegistry" />
+	<bean name="defaultTicketFactory" class="org.jasig.cas.ticket.DefaultTicketFactory" />
+	<bean name="defaultTicketGrantingTicketFactory"
+		class="org.jasig.cas.ticket.DefaultTicketGrantingTicketFactory" />
+	<bean name="defaultProxyGrantingTicketFactory"
+		class="org.jasig.cas.ticket.DefaultProxyGrantingTicketFactory" />
+	<bean name="defaultServiceTicketFactory" class="org.jasig.cas.ticket.DefaultServiceTicketFactory" />
+	<bean name="defaultProxyTicketFactory" class="org.jasig.cas.ticket.DefaultProxyTicketFactory" />
+	<bean name="loginTicketUniqueIdGenerator"
+		class="org.jasig.cas.util.HostNameBasedUniqueTicketIdGenerator.LoginTicketIdGenerator" />
+	<bean name="proxy20TicketUniqueIdGenerator"
+		class="org.jasig.cas.util.HostNameBasedUniqueTicketIdGenerator.ProxyTicketIdGenerator" />
+	<bean name="serviceTicketUniqueIdGenerator"
+		class="org.jasig.cas.util.HostNameBasedUniqueTicketIdGenerator.ServiceTicketIdGenerator" />
+	<bean name="ticketGrantingTicketUniqueIdGenerator"
+		class="org.jasig.cas.util.HostNameBasedUniqueTicketIdGenerator.TicketGrantingTicketIdGenerator" />
+	<bean name="alwaysExpiresExpirationPolicy"
+		class="org.jasig.cas.ticket.support.AlwaysExpiresExpirationPolicy" />
+	<bean name="hardTimeoutExpirationPolicy"
+		class="org.jasig.cas.ticket.support.HardTimeoutExpirationPolicy" />
+	<bean name="multiTimeUseOrTimeoutExpirationPolicy"
+		class="org.jasig.cas.ticket.support.MultiTimeUseOrTimeoutExpirationPolicy" />
+	<bean name="neverExpiresExpirationPolicy"
+		class="org.jasig.cas.ticket.support.NeverExpiresExpirationPolicy" />
+	<bean name="rememberMeDelegatingExpirationPolicy"
+		class="org.jasig.cas.ticket.support.RememberMeDelegatingExpirationPolicy" />
+	<bean name="throttledUseAndTimeoutExpirationPolicy"
+		class="org.jasig.cas.ticket.support.ThrottledUseAndTimeoutExpirationPolicy" />
+	<bean name="ticketGrantingTicketExpirationPolicy"
+		class="org.jasig.cas.ticket.support.TicketGrantingTicketExpirationPolicy" />
+	<bean name="timeoutExpirationPolicy" class="org.jasig.cas.ticket.support.TimeoutExpirationPolicy" />
+	<bean name="acceptAnyAuthenticationPolicyFactory"
+		class="org.jasig.cas.authentication.AcceptAnyAuthenticationPolicyFactory" />
+	<bean name="defaultPrincipalFactory"
+		class="org.jasig.cas.authentication.principal.DefaultPrincipalFactory" />
+	<bean name="webApplicationServiceFactory"
+		class="org.jasig.cas.authentication.principal.WebApplicationServiceFactory" />
+	<bean name="defaultArgumentExtractor" class="org.jasig.cas.web.support.DefaultArgumentExtractor" />
+	<bean name="proxyAuthenticationHandler"
+		class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler" />
+	<bean name="proxyPrincipalResolver"
+		class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
+	<bean name="successfulHandlerMetaDataPopulator"
+		class="org.jasig.cas.authentication.SuccessfulHandlerMetaDataPopulator" />
+	<bean name="rememberMeAuthenticationMetaDataPopulator"
+		class="org.jasig.cas.authentication.principal.RememberMeAuthenticationMetaDataPopulator" />
+
+	<bean name="memoryMonitor" class="org.jasig.cas.monitor.MemoryMonitor" />
+	<bean name="sessionMonitor" class="org.jasig.cas.monitor.SessionMonitor" />
+	<bean name="neverThrottle"
+		class="org.jasig.cas.web.support.NeverThrottledSubmissionHandlerInterceptorAdapter" />
+	<bean name="loginFlowCipherBean" class="org.jasig.cas.web.flow.CasWebflowCipherBean" />
+	<bean name="webflowCipherExecutor" class="org.jasig.cas.util.WebflowCipherExecutor" />
+	<bean name="messageInterpolator"
+		class="org.jasig.cas.util.SpringAwareMessageMessageInterpolator" />
+	<bean name="messageSource" class="org.jasig.cas.web.view.CasReloadableMessageBundle" />
+	<bean name="serviceThemeResolver" class="org.jasig.cas.services.web.ServiceThemeResolver" />
+
+	<bean name="logoutManager" class="org.jasig.cas.logout.LogoutManagerImpl" />
+	<bean name="logoutBuilder"
+		class="org.jasig.cas.logout.SamlCompliantLogoutMessageCreator" />
+	<bean name="noRedirectHttpClient" class="org.jasig.cas.util.http.SimpleHttpClientFactoryBean" />
+	<bean name="supportsTrustStoreSslSocketFactoryHttpClient" class="org.jasig.cas.util.http.SimpleHttpClientFactoryBean" />
+
+	<!-- <bean name="shiroCipherExecutor" class="org.jasig.cas.util.ShiroCipherExecutor" 
+		/> -->
+	<!-- <bean name="acceptUsersAuthenticationHandler" -->
+	<!-- class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler" 
+		/> -->
+	<bean name="errorHandlerResolver" class="org.jasig.cas.web.FlowExecutionExceptionResolver" />
+</beans>
