@@ -128,6 +128,7 @@
 	<bean name="proxy10Handler" class="org.jasig.cas.ticket.proxy.support.Cas10ProxyHandler" />
 	<bean name="proxy20Handler" class="org.jasig.cas.ticket.proxy.support.Cas20ProxyHandler" />
 
+	<bean name="ticketResourceRestController" class="org.jasig.cas.support.rest.TicketsResource" />
 	<bean name="legacyValidateController" class="org.jasig.cas.web.LegacyValidateController" />
 	<bean name="proxyController" class="org.jasig.cas.web.ProxyController" />
 	<bean name="proxyValidateController" class="org.jasig.cas.web.ProxyValidateController" />
