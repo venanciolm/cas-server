@@ -16,7 +16,19 @@
 	</description>
 	<bean name="centralAuthenticationService" class="org.jasig.cas.CentralAuthenticationServiceImpl" />
 	<bean name="servicesManager" class="org.jasig.cas.services.DefaultServicesManagerImpl" />
+	<bean name="authenticationManager"
+		class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager" />
 	<bean name="inMemoryServiceRegistryDao" class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl" />
+	<bean name="anyAuthenticationPolicy" class="org.jasig.cas.authentication.AnyAuthenticationPolicy" />
+	<bean name="defaultTicketRegistrySupport"
+		class="org.jasig.cas.ticket.registry.DefaultTicketRegistrySupport" />
+	<bean name="ticketGrantingTicketCookieGenerator"
+		class="org.jasig.cas.web.support.TGCCookieRetrievingCookieGenerator" />
+	<bean name="defaultCookieValueManager"
+		class="org.jasig.cas.web.support.DefaultCasCookieValueManager" />
+	<bean name="tgcCipherExecutor" class="org.jasig.cas.util.TGCCipherExecutor" />
+
+
 	<bean name="ticketResourceResolver"
 		class="org.jasig.cas.audit.spi.TicketAsFirstParameterResourceResolver" />
 	<bean name="auditablePrincipalResolver"
@@ -72,7 +84,6 @@
 	<bean name="sessionMonitor" class="org.jasig.cas.monitor.SessionMonitor" />
 	<bean name="neverThrottle"
 		class="org.jasig.cas.web.support.NeverThrottledSubmissionHandlerInterceptorAdapter" />
-	<bean name="loginFlowCipherBean" class="org.jasig.cas.web.flow.CasWebflowCipherBean" />
 	<bean name="webflowCipherExecutor" class="org.jasig.cas.util.WebflowCipherExecutor" />
 	<bean name="messageInterpolator"
 		class="org.jasig.cas.util.SpringAwareMessageMessageInterpolator" />
@@ -84,11 +95,54 @@
 		class="org.jasig.cas.logout.SamlCompliantLogoutMessageCreator" />
 	<bean name="noRedirectHttpClient" class="org.jasig.cas.util.http.SimpleHttpClientFactoryBean" />
 	<bean name="supportsTrustStoreSslSocketFactoryHttpClient" class="org.jasig.cas.util.http.SimpleHttpClientFactoryBean" />
-
-	<!-- <bean name="shiroCipherExecutor" class="org.jasig.cas.util.ShiroCipherExecutor" 
-		/> -->
-	<!-- <bean name="acceptUsersAuthenticationHandler" -->
-	<!-- class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler" 
-		/> -->
 	<bean name="errorHandlerResolver" class="org.jasig.cas.web.FlowExecutionExceptionResolver" />
+	<bean name="loginFlowCipherBean" class="org.jasig.cas.web.flow.CasWebflowCipherBean" />
+	<bean name="authenticationViaFormAction" class="org.jasig.cas.web.flow.AuthenticationViaFormAction" />
+
+	<bean name="frontChannelLogoutAction" class="org.jasig.cas.web.flow.FrontChannelLogoutAction" />
+	<bean name="gatewayServicesManagementCheck" class="org.jasig.cas.web.flow.GatewayServicesManagementCheck" />
+	<bean name="generateLoginTicketAction" class="org.jasig.cas.web.flow.GenerateLoginTicketAction" />
+	<bean name="generateServiceTicketAction" class="org.jasig.cas.web.flow.GenerateServiceTicketAction" />
+	<bean name="genericSuccessViewAction" class="org.jasig.cas.web.flow.GenericSuccessViewAction" />
+	<bean name="initialFlowSetupAction" class="org.jasig.cas.web.flow.InitialFlowSetupAction" />
+	<bean name="logoutAction" class="org.jasig.cas.web.flow.LogoutAction" />
+	<bean name="sendTicketGrantingTicketAction" class="org.jasig.cas.web.flow.SendTicketGrantingTicketAction" />
+	<bean name="serviceAuthorizationCheck" class="org.jasig.cas.web.flow.ServiceAuthorizationCheck" />
+	<bean name="terminateSessionAction" class="org.jasig.cas.web.flow.TerminateSessionAction" />
+	<bean name="ticketGrantingTicketCheckAction"
+		class="org.jasig.cas.web.flow.TicketGrantingTicketCheckAction" />
+
+	<bean name="warnCookieGenerator"
+		class="org.jasig.cas.web.WarningCookieRetrievingCookieGenerator" />
+
+	<bean name="defaultAuthenticationSystemSupport"
+		class="org.jasig.cas.authentication.DefaultAuthenticationSystemSupport" />
+	<bean name="defaultAuthenticationTransactionManager"
+		class="org.jasig.cas.authentication.DefaultAuthenticationTransactionManager" />
+	<bean name="defaultPrincipalElectionStrategy"
+		class="org.jasig.cas.authentication.DefaultPrincipalElectionStrategy" />
+
+	<bean name="authenticationExceptionHandler" class="org.jasig.cas.web.flow.AuthenticationExceptionHandler" />
+
+
+	<bean name="proxy10Handler" class="org.jasig.cas.ticket.proxy.support.Cas10ProxyHandler" />
+	<bean name="proxy20Handler" class="org.jasig.cas.ticket.proxy.support.Cas20ProxyHandler" />
+
+	<bean name="legacyValidateController" class="org.jasig.cas.web.LegacyValidateController" />
+	<bean name="proxyController" class="org.jasig.cas.web.ProxyController" />
+	<bean name="proxyValidateController" class="org.jasig.cas.web.ProxyValidateController" />
+	<bean name="serviceValidateController" class="org.jasig.cas.web.ServiceValidateController" />
+	<bean name="casAttributeEncoder"
+		class="org.jasig.cas.authentication.support.DefaultCasAttributeEncoder" />
+	<bean name="registeredServiceCipherExecutor"
+		class="org.jasig.cas.util.services.DefaultRegisteredServiceCipherExecutor" />
+
+	<bean name="cas1ServiceSuccessView" class="org.jasig.cas.web.view.Cas10ResponseView.Success" />
+	<bean name="cas1ServiceFailureView" class="org.jasig.cas.web.view.Cas10ResponseView.Failure" />
+	<bean name="cas2ServiceSuccessView" class="org.jasig.cas.web.view.Cas20ResponseView.Success" />
+	<bean name="cas3ServiceJsonView" class="org.jasig.cas.web.view.Cas30JsonResponseView" />
+	<bean name="cas3ServiceSuccessView" class="org.jasig.cas.web.view.Cas30ResponseView.Success" />
+	<bean name="v3ProxyValidateController" class="org.jasig.cas.web.v3.V3ProxyValidateController" />
+	<bean name="v3ServiceValidateController" class="org.jasig.cas.web.v3.V3ServiceValidateController" />
+
 </beans>
