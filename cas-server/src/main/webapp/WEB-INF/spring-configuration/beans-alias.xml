@@ -7,12 +7,6 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	<description>
-		Configuration file for the Inspektr package which handles
-		auditing for Java applications. If enabled this
-		should be modified to
-		log audit and statistics information the same way your local
-		applications do. The default is currently to log to the console which
-		is good for debugging/testing purposes.
 	</description>
 	<bean name="centralAuthenticationService" class="org.jasig.cas.CentralAuthenticationServiceImpl" />
 	<bean name="servicesManager" class="org.jasig.cas.services.DefaultServicesManagerImpl" />
