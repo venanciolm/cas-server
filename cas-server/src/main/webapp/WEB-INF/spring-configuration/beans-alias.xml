@@ -22,7 +22,6 @@
 		class="org.jasig.cas.web.support.DefaultCasCookieValueManager" />
 	<bean name="tgcCipherExecutor" class="org.jasig.cas.util.TGCCipherExecutor" />
 
-
 	<bean name="ticketResourceResolver"
 		class="org.jasig.cas.audit.spi.TicketAsFirstParameterResourceResolver" />
 	<bean name="auditablePrincipalResolver"
@@ -95,7 +94,7 @@
 
 	<bean name="frontChannelLogoutAction" class="org.jasig.cas.web.flow.FrontChannelLogoutAction" />
 	<bean name="gatewayServicesManagementCheck" class="org.jasig.cas.web.flow.GatewayServicesManagementCheck" />
-	<bean name="generateLoginTicketAction" class="org.jasig.cas.web.flow.GenerateLoginTicketAction" />
+	<bean name="ResourceLoader" class="org.springframework.core.io.DefaultResourceLoader" />
 	<bean name="generateServiceTicketAction" class="org.jasig.cas.web.flow.GenerateServiceTicketAction" />
 	<bean name="genericSuccessViewAction" class="org.jasig.cas.web.flow.GenericSuccessViewAction" />
 	<bean name="initialFlowSetupAction" class="org.jasig.cas.web.flow.InitialFlowSetupAction" />
@@ -105,6 +104,7 @@
 	<bean name="terminateSessionAction" class="org.jasig.cas.web.flow.TerminateSessionAction" />
 	<bean name="ticketGrantingTicketCheckAction"
 		class="org.jasig.cas.web.flow.TicketGrantingTicketCheckAction" />
+
 
 	<bean name="warnCookieGenerator"
 		class="org.jasig.cas.web.WarningCookieRetrievingCookieGenerator" />

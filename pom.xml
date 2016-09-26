@@ -49,10 +49,10 @@
 		<jdk.version>1.7</jdk.version>
 		<maven-scm-plugin>1.9.4</maven-scm-plugin>
 		<!-- CAS DEPENDENCIES -->
-		<cas.VERSION>4.2.2</cas.VERSION>
+		<cas.VERSION>4.2.5</cas.VERSION>
 		<disruptor.VERSION>3.3.4</disruptor.VERSION>
-		<pac4j.VERSION>1.8.8</pac4j.VERSION>
-		<spring.VERSION>4.2.3.RELEASE</spring.VERSION>
+		<pac4j.VERSION>1.8.9</pac4j.VERSION>
+		<spring.VERSION>4.2.7.RELEASE</spring.VERSION>
 		<spring-security.VERSION>4.0.4.RELEASE</spring-security.VERSION>
 		<spring-ws.VERSION>2.3.0.RELEASE</spring-ws.VERSION>
 		<spring-webmvc-pac4j.VERSION>1.0.1</spring-webmvc-pac4j.VERSION>
