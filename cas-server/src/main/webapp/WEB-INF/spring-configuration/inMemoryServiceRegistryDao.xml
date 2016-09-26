@@ -21,8 +21,11 @@
 			<property name="serviceId" value="^(http?|imap?|https?|imaps?)://.*" />
 			<property name="evaluationOrder" value="10000001" />
 			<property name="proxyPolicy" ref="allowItemsPolicy" />
+			<property name="attributeReleasePolicy" ref="useAllAttributes" />
 		</bean>
 	</util:list>
+	<bean class="org.jasig.cas.services.ReturnAllAttributeReleasePolicy"
+		id="useAllAttributes" />
 	<bean
 		class="org.jasig.cas.services.RegexMatchingRegisteredServiceProxyPolicy"
 		id="allowItemsPolicy">

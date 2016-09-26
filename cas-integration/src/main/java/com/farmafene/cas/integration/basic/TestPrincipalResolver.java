@@ -28,8 +28,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-
 import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.cas.authentication.UsernamePasswordCredential;
@@ -39,16 +37,12 @@ import org.jasig.cas.authentication.principal.PrincipalFactory;
 import org.jasig.cas.authentication.principal.PrincipalResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 public class TestPrincipalResolver implements PrincipalResolver {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(TestPrincipalResolver.class);
-	@NotNull
-	@Autowired
-	@Qualifier("principalFactory")
+
 	private PrincipalFactory principalFactory = new DefaultPrincipalFactory();
 	private IPrincipalInChain chain = new ThreadContextPrincipalInChain();
 

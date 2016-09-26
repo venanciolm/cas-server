@@ -15,6 +15,4 @@
 	<bean id="testPrincipalResolver"
 		class="com.farmafene.cas.integration.basic.TestPrincipalResolver">
 	</bean>
-	<bean name="attributeRepository"
-		class="com.farmafene.cas.integration.basic.PersonAttributeDaoTest" />
 </beans>
