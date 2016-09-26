@@ -72,7 +72,7 @@
 		<cas-client-core.VERSION>3.4.1</cas-client-core.VERSION>
 	</properties>
 	<scm>
-		<tag>development</tag>
+		<tag>HEAD</tag>
 		<url>https://github.com/venanciolm/cas-server</url>
 		<connection>scm:git:${project.scm.url}.git</connection>
 		<developerConnection>scm:git:${project.scm.url}.git</developerConnection>
