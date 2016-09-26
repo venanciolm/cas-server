@@ -43,15 +43,13 @@ public class CasClientLogout {
 	@Test
 	public void main() throws InvalidPropertiesFormatException, FileNotFoundException, IOException {
 		Properties props = new Properties();
-		props.loadFromXML(new FileInputStream("TICKETS.xml"));
-
-		String tgt = props.getProperty("TGT");
-		String serverUrl = "https://local.dev.farmafene.com/cas";
+		props.loadFromXML(new FileInputStream(CasClientLogin.TICKET_FILE));
+		String tgt = props.getProperty(CasClientLogin.TGT);
 		BasicRestClient client = new BasicRestClient();
-		client.setCasServerUrlPrefix(serverUrl);
+		client.setCasServerUrlPrefix(CasClientLogin.CAS_URL);
 		client.logout(tgt);
 		LOG.info("hemos hecho el logout de {}", tgt);
-		new File("TICKETS.xml").delete();
+		new File(CasClientLogin.TICKET_FILE).delete();
 	}
 
 }

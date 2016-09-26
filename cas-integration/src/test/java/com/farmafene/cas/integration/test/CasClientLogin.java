@@ -37,19 +37,21 @@ import com.farmafene.cas.integration.basic.BasicRestClient;
 public class CasClientLogin {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CasClientLogin.class);
+	static final String TGT = "TGT";
+	static final String TICKET_FILE = "target/TICKETS.xml";
+	static final String TEST_USER = "testUser";
+	static final String TEST_PASSWORD = "testUser";
+	static final String CAS_URL = "https://local.dev.farmafene.com/cas";
 
 	@Test
 	public void main() throws FileNotFoundException, IOException {
-		String serverUrl = "https://local.dev.farmafene.com/cas";
-		String username = "testUser";
-		String password = "testUser";
 		BasicRestClient client = new BasicRestClient();
-		client.setCasServerUrlPrefix(serverUrl);
-		String tgt = client.getTicketGrantingTicket(username, password);
+		client.setCasServerUrlPrefix(CAS_URL);
+		String tgt = client.getTicketGrantingTicket(TEST_USER, TEST_PASSWORD);
 		LOG.info("El tgt es {}", tgt);
 		Properties props = new Properties();
-		props.put("TGT", tgt);
-		props.storeToXML(new FileOutputStream("TICKETS.xml"), "Un ticket");
+		props.put(TGT, tgt);
+		props.storeToXML(new FileOutputStream(TICKET_FILE), "Un ticket");
 	}
 
 }

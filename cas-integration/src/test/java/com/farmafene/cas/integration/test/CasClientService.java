@@ -38,34 +38,33 @@ import com.farmafene.cas.integration.basic.BasicRestClient;
 
 public class CasClientService {
 
+	private static final String CAS_SERVICE = "https://local.dev.farmafene.com/sample/cas/login";
 	private static final Logger LOG = LoggerFactory.getLogger(CasClientService.class);
 
 	@SuppressWarnings("deprecation")
 	@Test
 	public void main() throws InvalidPropertiesFormatException, FileNotFoundException, IOException {
 		Properties props = new Properties();
-		props.loadFromXML(new FileInputStream("TICKETS.xml"));
+		props.loadFromXML(new FileInputStream(CasClientLogin.TICKET_FILE));
 		// /serviceValidate, /proxyValidate, /p3/serviceValidate,
 		// /p3/proxyValidate, /proxy
-		String tgt = props.getProperty("TGT");
-		String serverUrl = "https://local.dev.farmafene.com/cas";
-		String service = "https://local.dev.farmafene.com/sample/cas/login";
+		String tgt = props.getProperty(CasClientLogin.TGT);
 		BasicRestClient client = new BasicRestClient();
-		client.setCasServerUrlPrefix(serverUrl);
-		String ticket = client.getServiceTicket(tgt, service);
+		client.setCasServerUrlPrefix(CasClientLogin.CAS_URL);
+		String ticket = client.getServiceTicket(tgt, CAS_SERVICE);
 		LOG.info("Ticket = '{}'", ticket);
-		System.err.println(String.format("%1$s/serviceValidate?ticket=%2$s&service=%3$s", serverUrl, ticket,
-				URLEncoder.encode(service)));
-		System.err.println(String.format("%1$s/proxyValidate?ticket=%2$s&service=%3$s", serverUrl, ticket,
-				URLEncoder.encode(service)));
-		System.err.println(String.format("%1$s/p3/serviceValidate?ticket=%2$s&service=%3$s", serverUrl, ticket,
-				URLEncoder.encode(service)));
-		System.err.println(String.format("%1$s/p3/serviceValidate?ticket=%2$s&service=%3$s&format=json", serverUrl, ticket,
-				URLEncoder.encode(service)));
-		System.err.println(String.format("%1$s/p3/proxyValidate?ticket=%2$s&service=%3$s", serverUrl, ticket,
-				URLEncoder.encode(service)));
-		System.err.println(String.format("%1$s/p3/proxyValidate?ticket=%2$s&service=%3$s&format=json", serverUrl, ticket,
-				URLEncoder.encode(service)));
+		System.err.println(String.format("%1$s/serviceValidate?ticket=%2$s&service=%3$s", CasClientLogin.CAS_URL,
+				ticket, URLEncoder.encode(CAS_SERVICE)));
+		System.err.println(String.format("%1$s/proxyValidate?ticket=%2$s&service=%3$s", CasClientLogin.CAS_URL, ticket,
+				URLEncoder.encode(CAS_SERVICE)));
+		System.err.println(String.format("%1$s/p3/serviceValidate?ticket=%2$s&service=%3$s", CasClientLogin.CAS_URL,
+				ticket, URLEncoder.encode(CAS_SERVICE)));
+		System.err.println(String.format("%1$s/p3/serviceValidate?ticket=%2$s&service=%3$s&format=json",
+				CasClientLogin.CAS_URL, ticket, URLEncoder.encode(CAS_SERVICE)));
+		System.err.println(String.format("%1$s/p3/proxyValidate?ticket=%2$s&service=%3$s", CasClientLogin.CAS_URL,
+				ticket, URLEncoder.encode(CAS_SERVICE)));
+		System.err.println(String.format("%1$s/p3/proxyValidate?ticket=%2$s&service=%3$s&format=json",
+				CasClientLogin.CAS_URL, ticket, URLEncoder.encode(CAS_SERVICE)));
 		System.err.println();
 	}
 }
