@@ -1,286 +1,196 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.farmafene.cas</groupId>
+		<groupId>com.farmafene.cas.misc</groupId>
 		<artifactId>cas-project</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<groupId>com.farmafene.cas</groupId>
 	<artifactId>cas-server</artifactId>
+	<description>Module: ${project.name}</description>
+	<name>${project.groupId}:${project.artifactId}:${project.version}:${project.packaging}</name>
 	<packaging>war</packaging>
 	<build>
 		<finalName>cas</finalName>
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>com.farmafene.cas</groupId>
+			<artifactId>cas-integration</artifactId>
+		</dependency>
+		<!-- CAS SERVER DEPENDENCIES -->
+		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-support</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core</artifactId>
-			<version>${cas.VERSION}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jasig.service.persondir</groupId>
+					<artifactId>person-directory-impl</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-monitor</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-authentication</artifactId>
-			<version>${cas.VERSION}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jasig.service.persondir</groupId>
+					<artifactId>person-directory-impl</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-services</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-logout</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-audit</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-logging</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-tickets</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-web</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-validation</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-core-util</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-throttle</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-actions</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-cookie</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-reports</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-themes</artifactId>
-			<version>${cas.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-validation</artifactId>
-			<version>${cas.VERSION}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-server-support-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-server-support-x509-webflow</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.lmax</groupId>
 			<artifactId>disruptor</artifactId>
-			<version>${disruptor.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
 			<artifactId>pac4j-core</artifactId>
-			<version>${pac4j.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
 			<artifactId>pac4j-http</artifactId>
-			<version>${pac4j.VERSION}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.pac4j</groupId>
 			<artifactId>spring-webmvc-pac4j</artifactId>
-			<version>${spring-webmvc-pac4j.VERSION}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-webmvc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.pac4j</groupId>
-					<artifactId>pac4j-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
-			<version>${spring.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>${jstl.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-security-filter</artifactId>
-			<version>${cas-server-security-filter.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.ryantenney.metrics</groupId>
 			<artifactId>metrics-spring</artifactId>
-			<version>${drop-wizard-metrics.VERSION}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context-support</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-aop</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-jvm</artifactId>
-			<version>${drop-wizard-metrics.VERSION}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-servlets</artifactId>
-			<version>${drop-wizard-metrics.VERSION}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
-			<version>${log4j.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jasig</groupId>
 			<artifactId>spring-webflow-client-repo</artifactId>
-			<version>${spring-webflow-client.VERSION}</version>
-			<scope>runtime</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.webflow</groupId>
-					<artifactId>spring-webflow</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-codec</groupId>
-					<artifactId>commons-codec</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bouncycastle</groupId>
-					<artifactId>bcprov-jdk15on</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>${c3p0.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
-			<version>${bouncycastle.VERSION}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>${servlet-api.VERSION}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>${jsp-api.VERSION}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>1.4.0.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>

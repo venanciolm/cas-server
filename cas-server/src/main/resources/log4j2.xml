@@ -3,7 +3,7 @@
 <Configuration monitorInterval="60">
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %p [%c] - &lt;%m&gt;%n"/>
+            <PatternLayout pattern="%d %p [%c] (%L) - &lt;%m&gt;%n"/>
         </Console>
         <RollingFile name="file" fileName="cas.log" append="true"
                      filePattern="cas-%d{yyyy-MM-dd-HH}-%i.log">
@@ -67,6 +67,12 @@
         <AsyncLogger name="org.jasig.inspektr.audit.support" level="info" includeLocation="true">
             <AppenderRef ref="auditlogfile"/>
             <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.farmafene" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncLogger>
+        <AsyncLogger  name="org.jasig.cas.services" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
         </AsyncLogger>
         <AsyncRoot level="error">
             <AppenderRef ref="console"/>
