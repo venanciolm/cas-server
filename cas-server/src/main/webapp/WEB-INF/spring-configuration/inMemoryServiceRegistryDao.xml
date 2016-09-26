@@ -24,7 +24,7 @@
 			<property name="attributeReleasePolicy" ref="useAllAttributes" />
 		</bean>
 	</util:list>
-	<bean class="org.jasig.cas.services.ReturnAllAttributeReleasePolicy"
+	<bean class="com.farmafene.cas.integration.basic.AllAttributesRegisteredServiceAttributeReleasePolicy"
 		id="useAllAttributes" />
 	<bean
 		class="org.jasig.cas.services.RegexMatchingRegisteredServiceProxyPolicy"
