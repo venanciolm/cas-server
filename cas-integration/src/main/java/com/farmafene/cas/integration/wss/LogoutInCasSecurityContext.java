@@ -38,7 +38,7 @@ public class LogoutInCasSecurityContext extends
 			.getLogger(LogoutInCasSecurityContext.class);
 
 	public LogoutInCasSecurityContext() {
-		super(Phase.POST_INVOKE);
+		super(Phase.INVOKE);
 	}
 
 	/**
