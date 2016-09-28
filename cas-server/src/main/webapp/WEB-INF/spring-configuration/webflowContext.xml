@@ -59,10 +59,10 @@
         </property>
     </bean>
 
-    <bean id="internalViewResolver" class="org.jasig.cas.services.web.RegisteredServiceThemeBasedViewResolver"
+    <bean id="internalViewResolver" class="com.farmafene.cas.RegisteredServiceThemeBasedViewResolver"
           c:servicesManager-ref="servicesManager"
           p:suffix=".jsp"
           p:prefix="${cas.themeResolver.pathprefix:/WEB-INF/view/jsp}"
-          p:order="10000"/>
-
+          p:order="10000"
+          p:themeDefault="${cas.themeResolver.name:default}"/>
 </beans>
