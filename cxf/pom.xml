@@ -11,6 +11,9 @@
 	<groupId>com.farmafene.cas</groupId>
 	<artifactId>cxf</artifactId>
 	<packaging>war</packaging>
+	<properties>
+		<maven-war-plugin>3.3.1</maven-war-plugin>
+	</properties>
 	<build>
 		<finalName>cxf</finalName>
 	</build>

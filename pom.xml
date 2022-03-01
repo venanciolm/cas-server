@@ -45,6 +45,7 @@
 		<maven-source-plugin>2.4</maven-source-plugin>
 		<maven.assembly.plugin.version>2.6</maven.assembly.plugin.version>
 		<wagon-webdav-jackrabbit>2.9</wagon-webdav-jackrabbit>
+		<maven-war-plugin>3.3.1</maven-war-plugin>
 		<jdk.version>1.7</jdk.version>
 		<maven-scm-plugin>1.9.4</maven-scm-plugin>
 		<!-- CAS DEPENDENCIES -->
@@ -123,8 +124,14 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compliler-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven-war-plugin}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
